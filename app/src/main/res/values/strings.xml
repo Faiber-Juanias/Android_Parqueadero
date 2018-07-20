@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Parqueadero</string>
+
+    <!--Activity Splash-->
+    <string name="view_splash">Registro de Vehiculos en un Parqueadero</string>
 </resources>
