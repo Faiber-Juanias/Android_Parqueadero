@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Principal">
+    tools:context=".ActivityFragments">
 
     <fragment
         android:layout_width="match_parent"
@@ -14,8 +13,14 @@
         android:name="com.example.fhjua.parqueadero.Menu"
         tools:layout="@layout/fragment_menu">
 
-
-
     </fragment>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_fragment"
+        android:gravity="center">
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

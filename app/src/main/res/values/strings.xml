@@ -3,4 +3,13 @@
 
     <!--Activity Splash-->
     <string name="view_splash">Registro de Vehiculos en un Parqueadero</string>
+
+    <!--Layout de opciones-->
+    <string name="btn_registro">Registro</string>
+    <string name="btn_capacidad">Capacidad</string>
+    <string name="btn_informe">Informe</string>
+    <string name="btn_salida">Salir</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
