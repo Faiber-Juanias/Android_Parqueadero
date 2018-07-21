@@ -17,14 +17,21 @@
     </fragment>
 
     <LinearLayout
+        android:id="@+id/content_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        android:layout_height="404dp"
+        android:layout_marginTop="76dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@android:drawable/ic_input_get"/>
+            android:id="@+id/img_principal"
+            android:contentDescription="img_pricipal"
+            android:src="@android:drawable/ic_input_get" />
 
     </LinearLayout>
 
