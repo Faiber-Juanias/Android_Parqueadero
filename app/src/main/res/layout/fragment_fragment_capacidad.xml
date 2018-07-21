@@ -7,10 +7,33 @@
     tools:context=".FragmentCapacidad">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageButton
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:id="@+id/img_capacidad"
-        android:src="@android:drawable/ic_menu_delete"/>
+    <TextView
+        android:id="@+id/view_max_autos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="99dp"
+        android:text="@string/view_max_autos"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/view_max_motos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="225dp"
+        android:text="@string/view_max_motos"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/btn_configura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="74dp"
+        android:text="@string/btn_configura" />
 
 </RelativeLayout>

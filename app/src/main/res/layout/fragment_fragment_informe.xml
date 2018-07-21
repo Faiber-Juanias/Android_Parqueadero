@@ -7,10 +7,29 @@
     tools:context=".FragmentInforme">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageButton
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:id="@+id/img_informe"
-        android:src="@android:drawable/ic_dialog_email"/>
+    <Button
+        android:id="@+id/btn_entradas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/btn_entradas"/>
+
+    <Button
+        android:id="@+id/btn_salidas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="29dp"
+        android:text="@string/btn_salidas"/>
+
+    <ListView
+        android:id="@+id/lista_informe"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"></ListView>
 
 </RelativeLayout>

@@ -3,14 +3,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     tools:context=".FragmentRegistro">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageButton
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:id="@+id/img_registro"
-        android:src="@android:drawable/ic_dialog_alert"/>
+    <TextView
+        android:id="@+id/view_autos_dis"
+        android:layout_width="272dp"
+        android:layout_height="53dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="19dp"
+        android:text="@string/view_autos_dis"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/view_motos_dis"
+        android:layout_width="272dp"
+        android:layout_height="53dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/view_autos_dis"
+        android:layout_marginTop="93dp"
+        android:text="@string/view_motos_dip"
+        android:textSize="18dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_registro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="228dp" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_ent_sal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="112dp">
+
+        <RadioButton
+            android:id="@+id/radio_entrada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_entrada"
+            android:textSize="18dp" />
+
+        <RadioButton
+            android:id="@+id/radio_salida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_salida"
+            android:textSize="18dp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_registra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:text="@string/btn_registra" />
 
 </RelativeLayout>
