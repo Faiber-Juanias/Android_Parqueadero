@@ -15,7 +15,7 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="19dp"
         android:text="@string/view_autos_dis"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/view_motos_dis"
@@ -25,7 +25,7 @@
         android:layout_alignStart="@+id/view_autos_dis"
         android:layout_marginTop="93dp"
         android:text="@string/view_motos_dip"
-        android:textSize="18dp"/>
+        android:textSize="18sp"/>
 
     <Spinner
         android:id="@+id/spinner_registro"
@@ -48,14 +48,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/radio_entrada"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/radio_salida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/radio_salida"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </RadioGroup>
 
     <Button
