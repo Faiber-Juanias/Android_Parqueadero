@@ -1,5 +1,6 @@
 package com.example.fhjua.parqueadero;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -26,6 +29,11 @@ public class FragmentListaSalidas extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    //
+    private ListView objListaSalidas;
+    Activity objActivity = null;
+    Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +72,19 @@ public class FragmentListaSalidas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_lista_salidas, container, false);
+        View objVista = inflater.inflate(R.layout.fragment_fragment_lista_salidas, container, false);
+
+        objListaSalidas = (ListView) objVista.findViewById(R.id.lista_salidas);
+
+        //Obtengo el contexto
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
+
+        String[] valoresLista = new String[]{"1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1","2","3","4","5"};
+        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_list_item_1, valoresLista);
+        objListaSalidas.setAdapter(objAdapter);
+
+        return objVista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

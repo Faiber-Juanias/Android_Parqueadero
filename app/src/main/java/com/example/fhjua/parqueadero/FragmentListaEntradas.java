@@ -8,8 +8,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.Adapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -32,8 +34,9 @@ public class FragmentListaEntradas extends Fragment {
 
     //
     private ListView objListaEntradas;
-    Activity objActivity = null;
-    Context objContext = null;
+    private AdapterListView objAdapter;
+    private Activity objActivity = null;
+    private Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,8 +83,11 @@ public class FragmentListaEntradas extends Fragment {
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();
 
-        String[] valoresLista = new String[]{"faiber","juanias","laura","sofia","daniela"};
-        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_list_item_1, valoresLista);
+        ArrayList<Datos> objArrayDatos = new ArrayList<>();
+        objArrayDatos.add(new Datos(1,"faiber","estudiante",R.drawable.moto));
+        objArrayDatos.add(new Datos(2,"laura","estudiante",R.drawable.moto));
+
+        objAdapter = new AdapterListView(objContext, objArrayDatos);
         objListaEntradas.setAdapter(objAdapter);
 
         return objVistaListaEntradas;

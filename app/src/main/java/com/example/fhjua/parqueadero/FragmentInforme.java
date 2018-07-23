@@ -47,7 +47,9 @@ public class FragmentInforme extends Fragment {
         btnSalidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentTransaction objTransaction = objManager.beginTransaction();
+                objTransaction.replace(R.id.content_fragment_lista, objListaSalidas);
+                objTransaction.commit();
             }
         });
 
