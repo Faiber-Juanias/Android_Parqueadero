@@ -2,6 +2,7 @@ package com.example.fhjua.parqueadero;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -10,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -37,6 +42,10 @@ public class FragmentListaEntradas extends Fragment {
     private AdapterListView objAdapter;
     private Activity objActivity = null;
     private Context objContext = null;
+
+    private ContextWrapper objWrapper = null;
+    private InputStreamReader objAbreArchivo = null;
+    BufferedReader objBuffered = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,12 +92,21 @@ public class FragmentListaEntradas extends Fragment {
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();
 
-        ArrayList<Datos> objArrayDatos = new ArrayList<>();
-        objArrayDatos.add(new Datos(R.drawable.moto,"21/07/2018 13:00","1"));
-        objArrayDatos.add(new Datos(R.drawable.moto,"24/06/2018 21:00","2"));
+        //Traigo todos los archivos almacenados por la aplicacion
+        objWrapper = new ContextWrapper(objContext);
+        String[] archivos = objWrapper.fileList();
 
-        objAdapter = new AdapterListView(objContext, objArrayDatos);
-        objListaEntradas.setAdapter(objAdapter);
+        try {
+            for (int i=0; i<archivos.length; i++){
+                //Abrimos el archivo
+                objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivos[i]));
+                //Leemos el archivo
+                objBuffered = new BufferedReader(objAbreArchivo);
+                //
+            }
+        }catch (IOException e){
+
+        }
 
         return objVistaListaEntradas;
     }

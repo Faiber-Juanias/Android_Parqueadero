@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class FragmentRegistro extends Fragment {
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
+    private static int contadorArchivo = 1;
 
     Activity objActivity = null;
     Context objContext = null;
@@ -64,7 +67,7 @@ public class FragmentRegistro extends Fragment {
         objListSpinner.add("carro");
         objListSpinner.add("moto");
         //Adaptamos el Spinner
-        final ArrayAdapter objAdapter = new ArrayAdapter(objContext, android.R.layout.simple_spinner_dropdown_item, objListSpinner);
+        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_spinner_dropdown_item, objListSpinner);
         objSpinner.setAdapter(objAdapter);
 
         //Ponemos en escucha el boton de registrar
@@ -80,18 +83,20 @@ public class FragmentRegistro extends Fragment {
                     //Si es una entrada
                     case R.id.radio_entrada:
                         try {
-                            int contador = 1;
                             //Creamos un archivo
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contador+"1", Activity.MODE_PRIVATE));
+                            String nombreArchivo = "" + contadorArchivo + "1";
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(nombreArchivo, Activity.MODE_PRIVATE));
                             //Escribimos en el archivo
                             objCreaArchivo.write(selectSpinner);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo
                             objCreaArchivo.close();
-                            contador++;
-                        }catch (IOException e){
 
+                            contadorArchivo++;
+
+                        }catch (IOException e){
+                            Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     //Si es una salida
