@@ -32,7 +32,7 @@ public class AdapterListView extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        return objListaObjetos.get(position).getId();
+        return 0;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class AdapterListView extends BaseAdapter{
 
         //Asigno los datos a los componentes
         objImagen.setImageResource(objDatos.getImagen());
-        objViewFecha.setText(objDatos.getTitulo());
-        objViewNIngreso.setText(objDatos.getDetalle());
+        objViewFecha.setText(objDatos.getFechaHora());
+        objViewNIngreso.setText(objDatos.getNumeroIngreso());
 
         return vista;
     }

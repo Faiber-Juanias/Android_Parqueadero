@@ -84,8 +84,8 @@ public class FragmentListaEntradas extends Fragment {
         objContext = objActivity.getApplicationContext();
 
         ArrayList<Datos> objArrayDatos = new ArrayList<>();
-        objArrayDatos.add(new Datos(1,"faiber","estudiante",R.drawable.moto));
-        objArrayDatos.add(new Datos(2,"laura","estudiante",R.drawable.moto));
+        objArrayDatos.add(new Datos(R.drawable.moto,"21/07/2018 13:00","1"));
+        objArrayDatos.add(new Datos(R.drawable.moto,"24/06/2018 21:00","2"));
 
         objAdapter = new AdapterListView(objContext, objArrayDatos);
         objListaEntradas.setAdapter(objAdapter);

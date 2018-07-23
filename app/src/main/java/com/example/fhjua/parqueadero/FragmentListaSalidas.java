@@ -32,8 +32,9 @@ public class FragmentListaSalidas extends Fragment {
 
     //
     private ListView objListaSalidas;
-    Activity objActivity = null;
-    Context objContext = null;
+    AdapterListView objAdapter;
+    private Activity objActivity = null;
+    private Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,9 +81,7 @@ public class FragmentListaSalidas extends Fragment {
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();
 
-        String[] valoresLista = new String[]{"1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1","2","3","4","5","1","2","3","4","5"};
-        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_list_item_1, valoresLista);
-        objListaSalidas.setAdapter(objAdapter);
+
 
         return objVista;
     }
