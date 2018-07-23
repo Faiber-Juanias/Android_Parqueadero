@@ -1,7 +1,7 @@
 package com.example.fhjua.parqueadero;
 
-import android.content.Context;
 import android.app.Activity;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -31,6 +30,9 @@ public class FragmentRegistro extends Fragment {
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
+
+    Activity objActivity = null;
+    Context objContext = null;
 
     public FragmentRegistro() {
         // Required empty public constructor
@@ -53,13 +55,16 @@ public class FragmentRegistro extends Fragment {
         objViewAutos.setText("Autos diponibles: " + capacidadAutos);
         objViewMotos.setText("Motos diponibles: " + capacidadMotos);
 
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
+
         //Llenamos el Spinner de la interfaz
         ArrayList<String> objListSpinner = new ArrayList<>();
         objListSpinner.add("Seleccione la clase de vehiculo");
         objListSpinner.add("carro");
         objListSpinner.add("moto");
         //Adaptamos el Spinner
-        final ArrayAdapter objAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, objListSpinner);
+        final ArrayAdapter objAdapter = new ArrayAdapter(objContext, android.R.layout.simple_spinner_dropdown_item, objListSpinner);
         objSpinner.setAdapter(objAdapter);
 
         //Ponemos en escucha el boton de registrar
@@ -75,7 +80,6 @@ public class FragmentRegistro extends Fragment {
                     //Si es una entrada
                     case R.id.radio_entrada:
                         try {
-                            Context objContext = new ContextWrapper(getContext());
                             int contador = 1;
                             //Creamos un archivo
                             OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contador+"1", Activity.MODE_PRIVATE));
@@ -93,7 +97,6 @@ public class FragmentRegistro extends Fragment {
                     //Si es una salida
                     case R.id.radio_salida:
                         try {
-                            Context objContext = new ContextWrapper(getContext());
                             int contador = 1;
                             //Creamos un archivo
                             OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contador+"2", Activity.MODE_PRIVATE));

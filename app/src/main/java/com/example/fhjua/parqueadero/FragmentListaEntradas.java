@@ -1,5 +1,6 @@
 package com.example.fhjua.parqueadero;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +30,10 @@ public class FragmentListaEntradas extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //
     private ListView objListaEntradas;
+    Activity objActivity = null;
+    Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,8 +76,12 @@ public class FragmentListaEntradas extends Fragment {
 
         objListaEntradas = (ListView) objVistaListaEntradas.findViewById(R.id.lista_entradas);
 
+        //obtengo el Contexto
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
+
         String[] valoresLista = new String[]{"faiber","juanias","laura","sofia","daniela"};
-        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, valoresLista);
+        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_list_item_1, valoresLista);
         objListaEntradas.setAdapter(objAdapter);
 
         return objVistaListaEntradas;
