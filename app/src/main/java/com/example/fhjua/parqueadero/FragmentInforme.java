@@ -1,15 +1,14 @@
 package com.example.fhjua.parqueadero;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,8 +16,9 @@ import java.util.ArrayList;
 public class FragmentInforme extends Fragment {
 
     private Button btnEntradas, btnSalidas;
-    private ListView listaInforme;
-    private ArrayList<Datos> lista;
+    FragmentListaEntradas objListaEntradas = new FragmentListaEntradas();
+    FragmentListaSalidas objListaSalidas = new FragmentListaSalidas();
+
 
     public FragmentInforme() {
         // Required empty public constructor
@@ -32,13 +32,24 @@ public class FragmentInforme extends Fragment {
 
         btnEntradas = (Button) viewFragmentInforme.findViewById(R.id.btn_entradas);
         btnSalidas = (Button) viewFragmentInforme.findViewById(R.id.btn_salidas);
-        listaInforme = (ListView) viewFragmentInforme.findViewById(R.id.lista_informe);
 
-        lista = new ArrayList<Datos>();
-        lista.add(new Datos(1,"Animal", "Aguila", R.drawable.estacionamiento));
+        final FragmentManager objManager = getFragmentManager();
 
-        AdapterListView objMiAdapter = new AdapterListView(getContext(), lista);
-        listaInforme.setAdapter(objMiAdapter);
+        btnEntradas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction objTransaction = objManager.beginTransaction();
+                objTransaction.replace(R.id.content_fragment_lista, objListaEntradas);
+                objTransaction.commit();
+            }
+        });
+
+        btnSalidas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return viewFragmentInforme;
     }

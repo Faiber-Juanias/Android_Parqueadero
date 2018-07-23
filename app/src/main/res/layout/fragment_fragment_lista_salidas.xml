@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentListaEntradas">
+    tools:context=".FragmentListaSalidas">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
-        android:id="@+id/lista_entradas"
+        android:id="@+id/lista_salidas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 
-</RelativeLayout>
+</FrameLayout>
