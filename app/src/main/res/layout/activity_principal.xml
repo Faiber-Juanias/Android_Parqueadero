@@ -7,14 +7,40 @@
     android:orientation="vertical"
     tools:context=".Principal">
 
-    <fragment
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/menu"
-        android:name="com.example.fhjua.parqueadero.Menu"
-        tools:layout="@layout/fragment_menu">
+        android:gravity="center_horizontal">
 
-    </fragment>
+        <ImageButton
+            android:id="@+id/btn_registro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_add"/>
+
+        <ImageButton
+            android:id="@+id/btn_capacidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_gallery"/>
+
+        <ImageButton
+            android:id="@+id/btn_informe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_input_get"/>
+
+        <ImageButton
+            android:id="@+id/btn_salida"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_delete"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/content_fragment"

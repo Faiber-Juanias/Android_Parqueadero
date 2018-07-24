@@ -10,6 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 /**
@@ -30,10 +37,10 @@ public class FragmentInforme extends Fragment{
     private String mParam1;
     private String mParam2;
 
-    //-------------
+    //--------------------------------------------------------------------
     private Button btnEntradas, btnSalidas;
-    FragmentListaEntradas objListaEntradas = new FragmentListaEntradas();
-    FragmentListaSalidas objListaSalidas = new FragmentListaSalidas();
+    private ListView lista;
+    private AdapterListView objAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,26 +81,36 @@ public class FragmentInforme extends Fragment{
         // Inflate the layout for this fragment
         View viewFragmentInforme = inflater.inflate(R.layout.fragment_fragment_informe, container, false);
 
+        //Creamos las referencias
         btnEntradas = (Button) viewFragmentInforme.findViewById(R.id.btn_entradas);
         btnSalidas = (Button) viewFragmentInforme.findViewById(R.id.btn_salidas);
+        lista = (ListView) viewFragmentInforme.findViewById(R.id.lista_informe);
 
-        final FragmentManager objManager = getFragmentManager();
+        final Context objContext = null;
+
 
         btnEntradas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction objTransaction = objManager.beginTransaction();
-                objTransaction.replace(R.id.content_fragment_lista, objListaEntradas);
-                objTransaction.commit();
+                try {
+                    ArrayList<Datos> objArrayLista = null;
+                    String[] archivo = objContext.fileList();
+                    for(int i=0; i<archivo.length; i++){
+                        InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(""));
+                        BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
+
+                        objArrayLista = new ArrayList<>();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(objContext, "Error al producir la lista.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btnSalidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction objTransaction = objManager.beginTransaction();
-                objTransaction.replace(R.id.content_fragment_lista, objListaSalidas);
-                objTransaction.commit();
+
             }
         });
 

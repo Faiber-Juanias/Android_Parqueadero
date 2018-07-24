@@ -17,7 +17,11 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -38,24 +42,57 @@ public class FragmentRegistro extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //---------
-    public static int capacidadAutos = 0;
-    public static int capacidadMotos = 0;
-
+    //-----------------------------------
+    Activity objActivity = null;
+    Context objContext = null;
     private TextView objViewAutos;
     private TextView objViewMotos;
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
-    private static int contadorArchivo = 1;
+    private static int contadorArchivoEntradas = 1;
+    private static int contadorArchivoSalidas = 1;
+    private int capacidadAutos = 0;
+    private int capacidadMotos = 0;
 
-    Activity objActivity = null;
-    Context objContext = null;
+    public int getCapacidadAutos() {
+        return capacidadAutos;
+    }
+
+    public void setCapacidadAutos(int capacidadAutos) {
+        this.capacidadAutos = capacidadAutos;
+    }
+
+    public int getCapacidadMotos() {
+        return capacidadMotos;
+    }
+
+    public void setCapacidadMotos(int capacidadMotos) {
+        this.capacidadMotos = capacidadMotos;
+    }
 
     private OnFragmentInteractionListener mListener;
 
     public FragmentRegistro() {
         // Required empty public constructor
+    }
+
+    public String getFechaHora(){
+        String fechaHora;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        String fecha = dateFormat.format(date);
+
+        Calendar objCalendar = Calendar.getInstance();
+        int h = objCalendar.get(Calendar.HOUR_OF_DAY);
+        int m = objCalendar.get(Calendar.MINUTE);
+
+        String horas = String.valueOf(h);
+        String minutos = String.valueOf(m);
+
+        String horaMinuto = "" + horas + ":" + minutos;
+        return fechaHora = "" + fecha + " " + horaMinuto;
     }
 
     /**
@@ -99,8 +136,8 @@ public class FragmentRegistro extends Fragment {
         objBtnRegistra = (Button) viewFragmentRegistro.findViewById(R.id.btn_registra);
 
         //Asignamos el texto a los TextView
-        objViewAutos.setText("Autos diponibles: " + capacidadAutos);
-        objViewMotos.setText("Motos diponibles: " + capacidadMotos);
+        objViewAutos.setText("Autos diponibles: " + getCapacidadAutos());
+        objViewMotos.setText("Motos diponibles: " + getCapacidadMotos());
 
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();
@@ -129,17 +166,23 @@ public class FragmentRegistro extends Fragment {
                         try {
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("11", Activity.MODE_PRIVATE));
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoEntradas+"1", Activity.MODE_PRIVATE));
                             //Escribimos en el archivo
-                            objCreaArchivo.write(selectSpinner);
+                            objCreaArchivo.write(""+getFechaHora()+"\n");
+                            objCreaArchivo.write("1"+"\n");
+                            objCreaArchivo.write(""+contadorArchivoEntradas);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo
                             objCreaArchivo.close();
 
-                            contadorArchivo++;
+                            contadorArchivoEntradas++;
 
                             Toast.makeText(objContext, "Archivo guardado.", Toast.LENGTH_SHORT).show();
+
+                            //Volvemos los campos a la normalidad
+                            objSpinner.setSelection(0);
+                            objGroup.
 
                         }catch (IOException e){
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
@@ -148,18 +191,22 @@ public class FragmentRegistro extends Fragment {
                     //Si es una salida
                     case R.id.radio_salida:
                         try {
-                            int contador = 1;
                             //Creamos un archivo
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contador+"2", Activity.MODE_PRIVATE));
+                            //String nombreArchivo = "" + contadorArchivo + "1";
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoSalidas+"2", Activity.MODE_PRIVATE));
                             //Escribimos en el archivo
                             objCreaArchivo.write(selectSpinner);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo
                             objCreaArchivo.close();
-                            contador++;
-                        }catch (IOException e){
 
+                            contadorArchivoSalidas++;
+
+                            Toast.makeText(objContext, "Archivo guardado.", Toast.LENGTH_SHORT).show();
+
+                        }catch (IOException e){
+                            Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                         }
                         break;
                 }

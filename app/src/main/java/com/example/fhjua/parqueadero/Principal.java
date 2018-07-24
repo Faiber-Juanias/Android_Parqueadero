@@ -7,56 +7,61 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class Principal extends AppCompatActivity implements ComunicaMenu,
+public class Principal extends AppCompatActivity implements
         FragmentRegistro.OnFragmentInteractionListener,
         FragmentCapacidad.OnFragmentInteractionListener,
         FragmentInforme.OnFragmentInteractionListener {
 
-    //Creamos un array que contendra todos los fragmentos
-    Fragment[] arrayFragment;
-
+    //Almaceno todos los id de los botones
+    private int[] botones = new int[]{R.id.btn_registro, R.id.btn_capacidad, R.id.btn_informe};
+    //Almaceno todas las instancias de los fragmentos
+    Fragment[] objFragments = new Fragment[3];
     private ImageView imgPrincipal;
+    private ImageButton objBotones;
+    private ImageButton btnSalida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
+        //Creo cada una de las referencias
         imgPrincipal = (ImageView) findViewById(R.id.img_principal);
+        btnSalida = (ImageButton) findViewById(R.id.btn_salida);
 
-        //Instanciamos el array
-        arrayFragment = new Fragment[3];
-        arrayFragment[0]=new FragmentRegistro();
-        arrayFragment[1]=new FragmentCapacidad();
-        arrayFragment[2]=new FragmentInforme();
-    }
+        //Almaceno cada una de las instancias de cada fragmento
+        objFragments[0] = new FragmentRegistro();
+        objFragments[1] = new FragmentCapacidad();
+        objFragments[2] = new FragmentInforme();
 
-    @Override
-    public void menu(int boton) {
-        //Llamamos al método getFragmentManager y almacenamos lo que devuelve en un objeto de tipo FragmentManager
-        FragmentManager objManejadorFragments = getFragmentManager();
-        //Conseguimos o iniciamos la transaccion
-        FragmentTransaction objTransaccion = objManejadorFragments.beginTransaction();
-        //Ocultamos la imagen del Relative layout en la Activity principal
-        imgPrincipal.setVisibility(View.GONE);
-        //Reemplazamos el fragment actual
+        //Creo un bucle que crea la referencia y eventos de cada uno de los botones
+        for (int i=0; i<botones.length; i++){
+            objBotones = (ImageButton) findViewById(botones[i]);
+            final int n = i;
+            objBotones.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        //Creamos el nuevo menu a reemplazar
-        Fragment newMenu = new Menu();
-        //Creamos un objeto de tipo menu
-        Bundle dato = new Bundle();
-        //cargamos el id del boton a pasar
-        dato.putInt("BTNSELECT", boton);
-        //pasamos el id del boton
-        newMenu.setArguments(dato);
-        //Reemplazamos el menua actual por newMenu
-        objTransaccion.replace(R.id.menu, newMenu);
+                    //Ocultamos la imagen de Activity principal
+                    imgPrincipal.setVisibility(View.GONE);
 
-        objTransaccion.replace(R.id.content_fragment, arrayFragment[boton]);
-        //Iniciamos la transaccion
-        objTransaccion.commit();
+                    FragmentManager objManager = getFragmentManager();
+                    FragmentTransaction objTransaction = objManager.beginTransaction();
+                    objTransaction.replace(R.id.content_fragment, objFragments[n]);
+                    objTransaction.commit();
+                }
+            });
+        }
+
+        btnSalida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
