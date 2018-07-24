@@ -3,12 +3,16 @@ package com.example.fhjua.parqueadero;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Principal extends AppCompatActivity implements ComunicaMenu{
+public class Principal extends AppCompatActivity implements ComunicaMenu,
+        FragmentRegistro.OnFragmentInteractionListener,
+        FragmentCapacidad.OnFragmentInteractionListener,
+        FragmentInforme.OnFragmentInteractionListener {
 
     //Creamos un array que contendra todos los fragmentos
     Fragment[] arrayFragment;
@@ -53,5 +57,10 @@ public class Principal extends AppCompatActivity implements ComunicaMenu{
         objTransaccion.replace(R.id.content_fragment, arrayFragment[boton]);
         //Iniciamos la transaccion
         objTransaccion.commit();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

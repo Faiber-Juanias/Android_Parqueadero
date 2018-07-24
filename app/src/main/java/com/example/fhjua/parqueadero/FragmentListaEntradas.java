@@ -45,7 +45,7 @@ public class FragmentListaEntradas extends Fragment {
 
     private ContextWrapper objWrapper = null;
     private InputStreamReader objAbreArchivo = null;
-    BufferedReader objBuffered = null;
+    private BufferedReader objBuffered = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -96,17 +96,30 @@ public class FragmentListaEntradas extends Fragment {
         objWrapper = new ContextWrapper(objContext);
         String[] archivos = objWrapper.fileList();
 
+        for (int i=0; i<archivos.length; i++){
+            if (archivos[i].equals("11")){
+                Toast.makeText(objContext, "Si existe el archivo.", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(objContext, "No existe el archivo", Toast.LENGTH_SHORT).show();
+            }
+        }
+        /*
         try {
-            for (int i=0; i<archivos.length; i++){
+            //for (int i=0; i<archivos.length; i++){
                 //Abrimos el archivo
-                objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivos[i]));
+                objAbreArchivo = new InputStreamReader(objContext.openFileInput("11"));
                 //Leemos el archivo
                 objBuffered = new BufferedReader(objAbreArchivo);
-                //
-            }
+                //Almaceno los datos del archivo
+                String linea = objBuffered.readLine();
+                ArrayList<Datos> objDatos = new ArrayList<>();
+                objDatos.add(new Datos(R.drawable.moto,linea,"1"));
+                objAdapter = new AdapterListView(objContext, objDatos);
+                objListaEntradas.setAdapter(objAdapter);
+            //}
         }catch (IOException e){
-
-        }
+            Toast.makeText(objContext, "Error al mostrar el archivo.", Toast.LENGTH_SHORT).show();
+        }*/
 
         return objVistaListaEntradas;
     }
