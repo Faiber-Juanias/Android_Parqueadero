@@ -6,39 +6,42 @@
     tools:context=".FragmentInforme">
 
     <!-- TODO: Update blank fragment layout -->
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_entradas"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:text="@string/btn_entradas" />
 
-        <Button
-            android:id="@+id/btn_salidas"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="29dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:text="@string/btn_salidas" />
-    </LinearLayout>
+    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/btn_lista_entradas"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:text="@string/btn_lista_entradas" />
+
+    <Button
+        android:id="@+id/btn_lista_salidas"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="25dp"
+        android:text="@string/btn_lista_salidas" />
 
 
     <ListView
         android:id="@+id/lista_informe"
         android:layout_width="match_parent"
-        android:layout_height="509dp"
+        android:layout_height="390dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:background="@android:color/holo_blue_dark">
 
     </ListView>
 

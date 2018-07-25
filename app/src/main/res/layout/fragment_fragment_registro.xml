@@ -59,12 +59,12 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btn_registra"
+        android:id="@+id/btn_registra_archivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="31dp"
-        android:text="@string/btn_registra" />
+        android:text="@string/btn_registra_archivo" />
 
 </RelativeLayout>

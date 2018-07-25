@@ -1,11 +1,13 @@
 package com.example.fhjua.parqueadero;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +40,21 @@ public class FragmentInforme extends Fragment{
     private String mParam2;
 
     //--------------------------------------------------------------------
-    private Button btnEntradas, btnSalidas;
     private ListView lista;
-    private AdapterListView objAdapter;
+    private Button btnListaEntradas;
+    private Button btnListaSalidas;
+    //Creamos un objeto de tipo AdapterListView
+    private AdapterListView objAdapter = null;
+    //Creamos un objeto de tipo InputStreamReader
+    private InputStreamReader objAbreArchivo = null;
+    //Creamos un objeto de tipo BufferedReader
+    private BufferedReader objBuffered = null;
+    //Creamos un ArrayList de tipo Datos
+    private ArrayList<Datos> objArrayLista = null;
+    //Creamos un objeto de tipo Activity
+    private Activity objActivity = null;
+    //Creamos el contexto de la aplicacion
+    private Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,42 +93,108 @@ public class FragmentInforme extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewFragmentInforme = inflater.inflate(R.layout.fragment_fragment_informe, container, false);
+        View vista = inflater.inflate(R.layout.fragment_fragment_informe, container, false);
 
         //Creamos las referencias
-        btnEntradas = (Button) viewFragmentInforme.findViewById(R.id.btn_entradas);
-        btnSalidas = (Button) viewFragmentInforme.findViewById(R.id.btn_salidas);
-        lista = (ListView) viewFragmentInforme.findViewById(R.id.lista_informe);
+        btnListaEntradas = (Button) vista.findViewById(R.id.btn_lista_entradas);
+        btnListaSalidas = (Button) vista.findViewById(R.id.btn_lista_salidas);
+        lista = (ListView) vista.findViewById(R.id.lista_informe);
 
-        final Context objContext = null;
+        //Obtenemos el contexto de la aplicacion
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
 
-
-        btnEntradas.setOnClickListener(new View.OnClickListener() {
+        btnListaEntradas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    ArrayList<Datos> objArrayLista = null;
+                    //Instanciamos el ArrayList de tipo Datos
+                    objArrayLista = new ArrayList<>();
+
                     String[] archivo = objContext.fileList();
                     for(int i=0; i<archivo.length; i++){
-                        InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(""));
-                        BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
+                        if (archivo[i].equalsIgnoreCase("instant-run")) {
+                            continue;
+                        }
 
-                        objArrayLista = new ArrayList<>();
+                        objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                        objBuffered = new BufferedReader(objAbreArchivo);
+
+                        String fechaHora = objBuffered.readLine();
+                        String entrada = objBuffered.readLine();
+                        String ordenArchivo = objBuffered.readLine();
+                        String vehiculo = objBuffered.readLine();
+
+                        //Verificamos que sea una entrada
+                        if (entrada.equals("1")) {
+                            //Verificamos el tipo de vehiculo
+                            if (vehiculo.equals("moto")) {
+                                //Creo un item en la lista de informe
+                                objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                            } else if (vehiculo.equals("carro")) {
+                                //Creo un item en la lista de informe
+                                objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
+                            }
+                        }
                     }
+                    //Creamos una instancia del adaptador
+                    objAdapter = new AdapterListView(objContext, objArrayLista);
+                    //Adaptamos el adaptador a la lista
+                    lista.setAdapter(objAdapter);
                 }catch (Exception e){
-                    Toast.makeText(objContext, "Error al producir la lista.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        btnSalidas.setOnClickListener(new View.OnClickListener() {
+        btnListaSalidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    //Instanciamos el ArrayList de tipo Datos
+                    objArrayLista = new ArrayList<>();
 
+                    String[] archivo = objContext.fileList();
+                    if (archivo[0]!=null) {
+                        for (int i = 0; i < archivo.length; i++) {
+                            if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                continue;
+                            }
+
+                            objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                            objBuffered = new BufferedReader(objAbreArchivo);
+
+                            String fechaHora = objBuffered.readLine();
+                            String entrada = objBuffered.readLine();
+                            String ordenArchivo = objBuffered.readLine();
+                            String vehiculo = objBuffered.readLine();
+
+                            //Verificamos que sea una salida
+                            if (entrada.equals("2")) {
+                                //Verificamos el tipo de vehiculo
+                                if (vehiculo.equals("moto")) {
+                                    //Creo un item en la lista de informe
+                                    objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                                } else if (vehiculo.equals("carro")) {
+                                    //Creo un item en la lista de informe
+                                    objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
+                                }
+                            }
+                        }
+                    }else {
+                        Toast.makeText(objContext, "No se encuentran entradas.", Toast.LENGTH_SHORT).show();
+                    }
+                    //Creamos una instancia del adaptador
+                    objAdapter = new AdapterListView(objContext, objArrayLista);
+                    //Adaptamos el adaptador a la lista
+                    lista.setAdapter(objAdapter);
+                }catch (Exception e){
+                    Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        return viewFragmentInforme;
+        return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

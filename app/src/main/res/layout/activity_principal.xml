@@ -17,28 +17,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_add"/>
+            android:contentDescription="@string/btn_registro"
+            android:src="@android:drawable/ic_menu_add" />
 
         <ImageButton
             android:id="@+id/btn_capacidad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_gallery"/>
+            android:contentDescription="@string/btn_capacidad"
+            android:src="@android:drawable/ic_menu_gallery" />
 
         <ImageButton
             android:id="@+id/btn_informe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_input_get"/>
+            android:contentDescription="@string/btn_informe"
+            android:src="@android:drawable/ic_input_get" />
 
         <ImageButton
             android:id="@+id/btn_salida"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_delete"/>
+            android:contentDescription="@string/btn_salida"
+            android:src="@android:drawable/ic_menu_delete" />
 
     </LinearLayout>
 

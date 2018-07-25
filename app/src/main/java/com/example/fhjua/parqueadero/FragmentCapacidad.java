@@ -73,9 +73,9 @@ public class FragmentCapacidad extends Fragment {
         // Inflate the layout for this fragment
         View viewFragmetnCapacidad = inflater.inflate(R.layout.fragment_fragment_capacidad, container, false);
 
-        viewMaxAutos = (TextView) viewFragmetnCapacidad.findViewById(R.id.view_max_autos);
-        viewMaxMotos = (TextView) viewFragmetnCapacidad.findViewById(R.id.view_max_motos);
-        btnConfigura = (Button) viewFragmetnCapacidad.findViewById(R.id.btn_configura);
+        viewMaxAutos = viewFragmetnCapacidad.findViewById(R.id.view_max_autos);
+        viewMaxMotos = viewFragmetnCapacidad.findViewById(R.id.view_max_motos);
+        btnConfigura = viewFragmetnCapacidad.findViewById(R.id.btn_configura);
 
         return viewFragmetnCapacidad;
     }

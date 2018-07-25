@@ -4,28 +4,25 @@
     <!--Activity Splash-->
     <string name="view_splash">Registro de Vehiculos en un Parqueadero</string>
 
-    <!--Layout de opciones-->
+    <!--Activity Principal-->
     <string name="btn_registro">Registro</string>
     <string name="btn_capacidad">Capacidad</string>
     <string name="btn_informe">Informe</string>
-    <string name="btn_salida">Salir</string>
+    <string name="btn_salida">Salida</string>
 
     <!--Fragment FragmentRegistro-->
     <string name="view_autos_dis">Autos disponibles:</string>
     <string name="view_motos_dip">Motos disponibles:</string>
     <string name="radio_entrada">Entrada</string>
     <string name="radio_salida">Salida</string>
-    <string name="btn_registra">Registrar</string>
+    <string name="btn_registra_archivo">Registrar</string>
 
     <!--Fragment FragmentCapacidad-->
     <string name="view_max_autos">Máxima capacidad de autos</string>
     <string name="view_max_motos">Máxima capacidad de motos</string>
     <string name="btn_configura">Configurar</string>
 
-    <!--Fragment FragmentRegistro-->
-    <string name="btn_entradas">Entradas</string>
-    <string name="btn_salidas">Salidas</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Fragment FragmentInforme-->
+    <string name="btn_lista_entradas">Entradas</string>
+    <string name="btn_lista_salidas">Salidas</string>
 </resources>

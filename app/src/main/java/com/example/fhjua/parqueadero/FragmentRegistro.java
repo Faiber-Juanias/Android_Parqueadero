@@ -129,11 +129,11 @@ public class FragmentRegistro extends Fragment {
         View viewFragmentRegistro = inflater.inflate(R.layout.fragment_fragment_registro, container, false);
 
         //Creamos las referencias con la interfaz
-        objViewAutos = (TextView) viewFragmentRegistro.findViewById(R.id.view_autos_dis);
-        objViewMotos = (TextView) viewFragmentRegistro.findViewById(R.id.view_motos_dis);
-        objSpinner = (Spinner) viewFragmentRegistro.findViewById(R.id.spinner_registro);
-        objGroup = (RadioGroup) viewFragmentRegistro.findViewById(R.id.radio_group_ent_sal);
-        objBtnRegistra = (Button) viewFragmentRegistro.findViewById(R.id.btn_registra);
+        objViewAutos = viewFragmentRegistro.findViewById(R.id.view_autos_dis);
+        objViewMotos = viewFragmentRegistro.findViewById(R.id.view_motos_dis);
+        objSpinner = viewFragmentRegistro.findViewById(R.id.spinner_registro);
+        objGroup = viewFragmentRegistro.findViewById(R.id.radio_group_ent_sal);
+        objBtnRegistra = viewFragmentRegistro.findViewById(R.id.btn_registra_archivo);
 
         //Asignamos el texto a los TextView
         objViewAutos.setText("Autos diponibles: " + getCapacidadAutos());
@@ -167,10 +167,14 @@ public class FragmentRegistro extends Fragment {
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
                             OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoEntradas+"1", Activity.MODE_PRIVATE));
-                            //Escribimos en el archivo
+                            //Escribimos la fecha y la hora
                             objCreaArchivo.write(""+getFechaHora()+"\n");
+                            //Escribimos que es una entrada
                             objCreaArchivo.write("1"+"\n");
-                            objCreaArchivo.write(""+contadorArchivoEntradas);
+                            //Escribimos el orden ascendente del archivo
+                            objCreaArchivo.write(""+contadorArchivoEntradas+"\n");
+                            //Escribimos si es una moto o un carro
+                            objCreaArchivo.write("" + selectSpinner);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo
@@ -178,11 +182,10 @@ public class FragmentRegistro extends Fragment {
 
                             contadorArchivoEntradas++;
 
-                            Toast.makeText(objContext, "Archivo guardado.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
 
                             //Volvemos los campos a la normalidad
                             objSpinner.setSelection(0);
-                            objGroup.
 
                         }catch (IOException e){
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
@@ -194,8 +197,12 @@ public class FragmentRegistro extends Fragment {
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
                             OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoSalidas+"2", Activity.MODE_PRIVATE));
-                            //Escribimos en el archivo
-                            objCreaArchivo.write(selectSpinner);
+                            //Escribimos la fecha y la hora
+                            objCreaArchivo.write(""+getFechaHora()+"\n");
+                            //Especificamos que es una salida
+                            objCreaArchivo.write("2"+"\n");
+                            //Especificamos el orden ascendente del archivo
+                            objCreaArchivo.write(""+contadorArchivoSalidas);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo
@@ -203,7 +210,10 @@ public class FragmentRegistro extends Fragment {
 
                             contadorArchivoSalidas++;
 
-                            Toast.makeText(objContext, "Archivo guardado.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
+
+                            //Volvemos los campos a la normalidad
+                            objSpinner.setSelection(0);
 
                         }catch (IOException e){
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();

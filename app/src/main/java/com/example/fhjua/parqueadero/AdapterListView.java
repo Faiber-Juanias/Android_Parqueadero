@@ -45,9 +45,9 @@ public class AdapterListView extends BaseAdapter{
         vista = objInflater.inflate(R.layout.item_list_view, null);
 
         //Creo cada referencia
-        ImageView objImagen = (ImageView) vista.findViewById(R.id.img_list_view);
-        TextView objViewFecha = (TextView) vista.findViewById(R.id.view_fecha);
-        TextView objViewNIngreso = (TextView) vista.findViewById(R.id.view_n_ingreso);
+        ImageView objImagen = vista.findViewById(R.id.img_list_view);
+        TextView objViewFecha = vista.findViewById(R.id.view_fecha);
+        TextView objViewNIngreso = vista.findViewById(R.id.view_n_ingreso);
 
         //Asigno los datos a los componentes
         objImagen.setImageResource(objDatos.getImagen());
