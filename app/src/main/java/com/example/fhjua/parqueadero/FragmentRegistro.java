@@ -25,7 +25,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -44,6 +43,7 @@ public class FragmentRegistro extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //---------------------------------------------------------
     //-----------------------------------
     Activity objActivity = null;
     Context objContext = null;
@@ -52,8 +52,6 @@ public class FragmentRegistro extends Fragment {
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
-    private static int contadorArchivoEntradas = 1;
-    private static int contadorArchivoSalidas = 1;
     private int capacidadAutos = 0;
     private int capacidadMotos = 0;
     //Creamos un objeto de tipo InputStreamReader
@@ -77,12 +75,6 @@ public class FragmentRegistro extends Fragment {
         this.capacidadMotos = capacidadMotos;
     }
 
-    private OnFragmentInteractionListener mListener;
-
-    public FragmentRegistro() {
-        // Required empty public constructor
-    }
-
     public String getFechaHora(){
         String fechaHora;
 
@@ -99,6 +91,12 @@ public class FragmentRegistro extends Fragment {
 
         String horaMinuto = "" + horas + ":" + minutos;
         return fechaHora = "" + fecha + " " + horaMinuto;
+    }
+
+    private OnFragmentInteractionListener mListener;
+
+    public FragmentRegistro() {
+        // Required empty public constructor
     }
 
     /**
@@ -166,16 +164,17 @@ public class FragmentRegistro extends Fragment {
                 //Almacenamos la seleccion de RadioButton
                 int selectRadio = objGroup.getCheckedRadioButtonId();
                 //Validamos el RadioButton presionado
-                switch (selectRadio){
+                switch (selectRadio) {
                     //Si es una entrada
                     case R.id.radio_entrada:
                         try {
+                            int contadorArchivoEntradas = 1;
                             //Creamos un ArrayList para almacenar el orden de los archivos
                             ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
                             //Traemos todos los archivos de la aplicacion)
                             String[] archivo = objContext.fileList();
                             //Si archivos en la posicion 0 no esta vacio
-                            if (!archivo[0].isEmpty()) {
+                            if (archivo!=null) {
                                 for (int i = 0; i < archivo.length; i++) {
                                     if (archivo[i].equalsIgnoreCase("instant-run")) {
                                         continue;
@@ -197,20 +196,19 @@ public class FragmentRegistro extends Fragment {
                             }
 
                             //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
-                            for (int i=0; i<arrayOrdenArchivo.size(); i++){
+                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
                                 contadorArchivoEntradas++;
-                                //
                             }
 
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoEntradas+"1", Activity.MODE_PRIVATE));
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoEntradas + "1", Activity.MODE_PRIVATE));
                             //Escribimos la fecha y la hora
-                            objCreaArchivo.write(""+getFechaHora()+"\n");
+                            objCreaArchivo.write("" + getFechaHora() + "\n");
                             //Escribimos que es una entrada
-                            objCreaArchivo.write("1"+"\n");
+                            objCreaArchivo.write("1" + "\n");
                             //Escribimos el orden ascendente del archivo
-                            objCreaArchivo.write(""+contadorArchivoEntradas+"\n");
+                            objCreaArchivo.write("" + contadorArchivoEntradas + "\n");
                             //Escribimos si es una moto o un carro
                             objCreaArchivo.write("" + selectSpinner);
                             //Limpiamos el archivo
@@ -218,28 +216,58 @@ public class FragmentRegistro extends Fragment {
                             //Cerramos el archivo
                             objCreaArchivo.close();
 
-                            contadorArchivoEntradas++;
-
                             Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
 
                             //Volvemos los campos a la normalidad
                             objSpinner.setSelection(0);
-                        }catch (IOException e){
+                        } catch (IOException e) {
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     //Si es una salida
                     case R.id.radio_salida:
                         try {
+                            int contadorArchivoSalidas = 1;
+                            //Creamos un ArrayList para almacenar el orden de los archivos
+                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
+                            //Traemos todos los archivos de la aplicacion)
+                            String[] archivo = objContext.fileList();
+                            //Si archivos en la posicion 0 no esta vacio
+                            if (archivo!=null) {
+                                for (int i = 0; i < archivo.length; i++) {
+                                    if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                        continue;
+                                    }
+
+                                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                                    objBuffered = new BufferedReader(objAbreArchivo);
+
+                                    String fechaHora = objBuffered.readLine();
+                                    String salida = objBuffered.readLine();
+                                    String ordenArchivo = objBuffered.readLine();
+                                    String vehiculo = objBuffered.readLine();
+
+                                    //Verificamos el orden de los archivos
+                                    if (salida.equals("2")) {
+                                        arrayOrdenArchivo.add(ordenArchivo);
+                                    }
+                                }
+                            }
+
+                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoSalidas
+                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
+                                contadorArchivoSalidas++;
+                            }
+
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoSalidas+"2", Activity.MODE_PRIVATE));
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoSalidas + "2", Activity.MODE_PRIVATE));
                             //Escribimos la fecha y la hora
-                            objCreaArchivo.write(""+getFechaHora()+"\n");
-                            //Especificamos que es una salida
-                            objCreaArchivo.write("2"+"\n");
-                            //Especificamos el orden ascendente del archivo
-                            objCreaArchivo.write(""+contadorArchivoSalidas+"\n");
+                            objCreaArchivo.write("" + getFechaHora() + "\n");
+                            //Escribimos que es una salida
+                            objCreaArchivo.write("2" + "\n");
+                            //Escribimos el orden ascendente del archivo
+                            objCreaArchivo.write("" + contadorArchivoSalidas + "\n");
                             //Escribimos si es una moto o un carro
                             objCreaArchivo.write("" + selectSpinner);
                             //Limpiamos el archivo
@@ -247,21 +275,17 @@ public class FragmentRegistro extends Fragment {
                             //Cerramos el archivo
                             objCreaArchivo.close();
 
-                            contadorArchivoSalidas++;
-
                             Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
 
                             //Volvemos los campos a la normalidad
                             objSpinner.setSelection(0);
-
-                        }catch (IOException e){
+                        } catch (IOException e) {
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                         }
                         break;
                 }
             }
         });
-
         return viewFragmentRegistro;
     }
 
