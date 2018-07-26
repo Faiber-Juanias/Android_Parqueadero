@@ -199,6 +199,7 @@ public class FragmentRegistro extends Fragment {
                             //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
                             for (int i=0; i<arrayOrdenArchivo.size(); i++){
                                 contadorArchivoEntradas++;
+                                //
                             }
 
                             //Creamos un archivo
