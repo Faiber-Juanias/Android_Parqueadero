@@ -15,7 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +56,10 @@ public class FragmentRegistro extends Fragment {
     private static int contadorArchivoSalidas = 1;
     private int capacidadAutos = 0;
     private int capacidadMotos = 0;
+    //Creamos un objeto de tipo InputStreamReader
+    private InputStreamReader objAbreArchivo = null;
+    //Creamos un objeto de tipo BufferedReader
+    private BufferedReader objBuffered = null;
 
     public int getCapacidadAutos() {
         return capacidadAutos;
@@ -164,6 +170,37 @@ public class FragmentRegistro extends Fragment {
                     //Si es una entrada
                     case R.id.radio_entrada:
                         try {
+                            //Creamos un ArrayList para almacenar el orden de los archivos
+                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
+                            //Traemos todos los archivos de la aplicacion)
+                            String[] archivo = objContext.fileList();
+                            //Si archivos en la posicion 0 no esta vacio
+                            if (!archivo[0].isEmpty()) {
+                                for (int i = 0; i < archivo.length; i++) {
+                                    if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                        continue;
+                                    }
+
+                                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                                    objBuffered = new BufferedReader(objAbreArchivo);
+
+                                    String fechaHora = objBuffered.readLine();
+                                    String entrada = objBuffered.readLine();
+                                    String ordenArchivo = objBuffered.readLine();
+                                    String vehiculo = objBuffered.readLine();
+
+                                    //Verificamos el orden de los archivos
+                                    if (entrada.equals("1")) {
+                                        arrayOrdenArchivo.add(ordenArchivo);
+                                    }
+                                }
+                            }
+
+                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
+                            for (int i=0; i<arrayOrdenArchivo.size(); i++){
+                                contadorArchivoEntradas++;
+                            }
+
                             //Creamos un archivo
                             //String nombreArchivo = "" + contadorArchivo + "1";
                             OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput(""+contadorArchivoEntradas+"1", Activity.MODE_PRIVATE));
@@ -186,7 +223,6 @@ public class FragmentRegistro extends Fragment {
 
                             //Volvemos los campos a la normalidad
                             objSpinner.setSelection(0);
-
                         }catch (IOException e){
                             Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                         }
@@ -202,7 +238,9 @@ public class FragmentRegistro extends Fragment {
                             //Especificamos que es una salida
                             objCreaArchivo.write("2"+"\n");
                             //Especificamos el orden ascendente del archivo
-                            objCreaArchivo.write(""+contadorArchivoSalidas);
+                            objCreaArchivo.write(""+contadorArchivoSalidas+"\n");
+                            //Escribimos si es una moto o un carro
+                            objCreaArchivo.write("" + selectSpinner);
                             //Limpiamos el archivo
                             objCreaArchivo.flush();
                             //Cerramos el archivo

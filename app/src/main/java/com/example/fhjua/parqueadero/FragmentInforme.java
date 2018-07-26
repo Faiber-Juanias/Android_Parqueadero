@@ -112,35 +112,39 @@ public class FragmentInforme extends Fragment{
                     objArrayLista = new ArrayList<>();
 
                     String[] archivo = objContext.fileList();
-                    for(int i=0; i<archivo.length; i++){
-                        if (archivo[i].equalsIgnoreCase("instant-run")) {
-                            continue;
-                        }
+                    if (!archivo[0].isEmpty()) {
+                        for (int i = 0; i < archivo.length; i++) {
+                            if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                continue;
+                            }
 
-                        objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                        objBuffered = new BufferedReader(objAbreArchivo);
+                            objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                            objBuffered = new BufferedReader(objAbreArchivo);
 
-                        String fechaHora = objBuffered.readLine();
-                        String entrada = objBuffered.readLine();
-                        String ordenArchivo = objBuffered.readLine();
-                        String vehiculo = objBuffered.readLine();
+                            String fechaHora = objBuffered.readLine();
+                            String entrada = objBuffered.readLine();
+                            String ordenArchivo = objBuffered.readLine();
+                            String vehiculo = objBuffered.readLine();
 
-                        //Verificamos que sea una entrada
-                        if (entrada.equals("1")) {
-                            //Verificamos el tipo de vehiculo
-                            if (vehiculo.equals("moto")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
-                            } else if (vehiculo.equals("carro")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
+                            //Verificamos que sea una entrada
+                            if (entrada.equals("1")) {
+                                //Verificamos el tipo de vehiculo
+                                if (vehiculo.equals("moto")) {
+                                    //Creo un item en la lista de informe
+                                    objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                                } else if (vehiculo.equals("carro")) {
+                                    //Creo un item en la lista de informe
+                                    objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
+                                }
                             }
                         }
+                        //Creamos una instancia del adaptador
+                        objAdapter = new AdapterListView(objContext, objArrayLista);
+                        //Adaptamos el adaptador a la lista
+                        lista.setAdapter(objAdapter);
+                    }else {
+                        Toast.makeText(objContext, "No se encuentran entradas.", Toast.LENGTH_SHORT).show();
                     }
-                    //Creamos una instancia del adaptador
-                    objAdapter = new AdapterListView(objContext, objArrayLista);
-                    //Adaptamos el adaptador a la lista
-                    lista.setAdapter(objAdapter);
                 }catch (Exception e){
                     Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -155,7 +159,7 @@ public class FragmentInforme extends Fragment{
                     objArrayLista = new ArrayList<>();
 
                     String[] archivo = objContext.fileList();
-                    if (archivo[0]!=null) {
+                    if (!archivo[0].isEmpty()) {
                         for (int i = 0; i < archivo.length; i++) {
                             if (archivo[i].equalsIgnoreCase("instant-run")) {
                                 continue;
@@ -181,13 +185,13 @@ public class FragmentInforme extends Fragment{
                                 }
                             }
                         }
+                        //Creamos una instancia del adaptador
+                        objAdapter = new AdapterListView(objContext, objArrayLista);
+                        //Adaptamos el adaptador a la lista
+                        lista.setAdapter(objAdapter);
                     }else {
-                        Toast.makeText(objContext, "No se encuentran entradas.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(objContext, "No se encuentran salidas.", Toast.LENGTH_SHORT).show();
                     }
-                    //Creamos una instancia del adaptador
-                    objAdapter = new AdapterListView(objContext, objArrayLista);
-                    //Adaptamos el adaptador a la lista
-                    lista.setAdapter(objAdapter);
                 }catch (Exception e){
                     Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
