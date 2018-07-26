@@ -18,9 +18,12 @@
     <string name="btn_registra_archivo">Registrar</string>
 
     <!--Fragment FragmentCapacidad-->
-    <string name="view_max_autos">Máxima capacidad de autos</string>
-    <string name="view_max_motos">Máxima capacidad de motos</string>
-    <string name="btn_configura">Configurar</string>
+    <string name="view_max_autos">Máxima capacidad de autos.</string>
+    <string name="view_capacidad_autos">0</string>
+    <string name="view_max_motos">Máxima capacidad de motos.</string>
+    <string name="view_capacidad_motos">0</string>
+    <string name="btn_config_autos">Configurar autos</string>
+    <string name="btn_config_motos">Configurar motos</string>
 
     <!--Fragment FragmentInforme-->
     <string name="btn_lista_entradas">Entradas</string>

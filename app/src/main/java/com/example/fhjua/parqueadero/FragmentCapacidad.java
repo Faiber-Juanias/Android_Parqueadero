@@ -1,5 +1,9 @@
 package com.example.fhjua.parqueadero;
 
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -19,7 +24,7 @@ import android.widget.TextView;
  * Use the {@link FragmentCapacidad#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCapacidad extends Fragment {
+public class FragmentCapacidad extends Fragment implements ComunicaDialogo{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,10 +34,12 @@ public class FragmentCapacidad extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //-----------
+    //-------------------------------------------------------------
     private TextView viewMaxAutos;
     private TextView viewMaxMotos;
-    private Button btnConfigura;
+    private Button btnUno, btnDos;
+    private Activity objActivity = null;
+    private Context objContext = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,9 +80,33 @@ public class FragmentCapacidad extends Fragment {
         // Inflate the layout for this fragment
         View viewFragmetnCapacidad = inflater.inflate(R.layout.fragment_fragment_capacidad, container, false);
 
-        viewMaxAutos = viewFragmetnCapacidad.findViewById(R.id.view_max_autos);
-        viewMaxMotos = viewFragmetnCapacidad.findViewById(R.id.view_max_motos);
-        btnConfigura = viewFragmetnCapacidad.findViewById(R.id.btn_configura);
+        viewMaxAutos = viewFragmetnCapacidad.findViewById(R.id.view_capacidad_autos);
+        viewMaxMotos = viewFragmetnCapacidad.findViewById(R.id.view_capacidad_motos);
+        btnUno = viewFragmetnCapacidad.findViewById(R.id.btn_config_autos);
+        btnDos = viewFragmetnCapacidad.findViewById(R.id.btn_config_motos);
+
+        //Obtenemos el contexto de la aplicacion
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
+
+        btnUno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Instanceo el dialogo
+                DialogoCapacidad objCapacidad = new DialogoCapacidad();
+                //Envia el id a la interfaz
+                ((ComunicaDialogo)getActivity()).enviaInfo("", btnUno.getId());
+                //Muestra el dialogo
+                objCapacidad.show(getFragmentManager(),"dialogcapacidad");
+            }
+        });
+
+        btnDos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return viewFragmetnCapacidad;
     }
@@ -102,6 +133,16 @@ public class FragmentCapacidad extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void enviaInfo(String texto, int id) {
+        /*
+        if (id == R.id.btn_config_autos){
+            viewMaxAutos.setText(texto);
+        }else if (id == R.id.btn_config_motos){
+            viewMaxMotos.setText(texto);
+        }*/
     }
 
     /**
