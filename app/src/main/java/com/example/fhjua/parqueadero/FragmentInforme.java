@@ -110,10 +110,15 @@ public class FragmentInforme extends Fragment{
                 try {
                     //Instanciamos el ArrayList de tipo Datos
                     objArrayLista = new ArrayList<>();
-
+                    //Obtenemos todos los archivos que contenga la aplicacion
                     String[] archivo = objContext.fileList();
+                    //Recorremos a archivo
                     for (int i = 0; i < archivo.length; i++) {
                         if (archivo[i].equalsIgnoreCase("instant-run")) {
+                            continue;
+                        }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
+                            continue;
+                        }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
                             continue;
                         }
 

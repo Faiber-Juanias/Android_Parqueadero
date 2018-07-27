@@ -1,9 +1,6 @@
 package com.example.fhjua.parqueadero;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 /**
@@ -103,8 +99,8 @@ public class FragmentCapacidad extends Fragment {
             }
         });
 
-        //Creamos la instancia de ConfiguraCapacidad
-        ConfiguraCapacidad objConfigura = new ConfiguraCapacidad(objContext);
+        //Creamos la instancia de AdministraArchivo
+        AdministraArchivo objConfigura = new AdministraArchivo(objContext);
 
         //Si se reciben argumentos
         if (getArguments() != null){

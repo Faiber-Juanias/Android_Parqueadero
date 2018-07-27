@@ -11,8 +11,12 @@
     <string name="btn_salida">Salida</string>
 
     <!--Fragment FragmentRegistro-->
-    <string name="view_autos_dis">Autos disponibles:</string>
-    <string name="view_motos_dip">Motos disponibles:</string>
+    <string name="viewUno">AUTOS</string>
+    <string name="view_autos_dis">Autos disponibles: 0</string>
+    <string name="view_autos_actuales">Autos actuales: 0</string>
+    <string name="viewDos">MOTOS</string>
+    <string name="view_motos_dip">Motos disponibles: 0</string>
+    <string name="view_motos_actuales">Motos actuales: 0</string>
     <string name="radio_entrada">Entrada</string>
     <string name="radio_salida">Salida</string>
     <string name="btn_registra_archivo">Registrar</string>

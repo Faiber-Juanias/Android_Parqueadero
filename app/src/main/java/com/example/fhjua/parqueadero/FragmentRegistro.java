@@ -47,8 +47,10 @@ public class FragmentRegistro extends Fragment {
     //-----------------------------------
     Activity objActivity = null;
     Context objContext = null;
-    private TextView objViewAutos;
-    private TextView objViewMotos;
+    private TextView objViewAutosDis;
+    private TextView objViewAutosActuales;
+    private TextView objViewMotosDis;
+    private TextView objViewMotosActuales;
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
@@ -56,24 +58,6 @@ public class FragmentRegistro extends Fragment {
     private InputStreamReader objAbreArchivo = null;
     //Creamos un objeto de tipo BufferedReader
     private BufferedReader objBuffered = null;
-
-    public String getFechaHora(){
-        String fechaHora;
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date date = new Date();
-        String fecha = dateFormat.format(date);
-
-        Calendar objCalendar = Calendar.getInstance();
-        int h = objCalendar.get(Calendar.HOUR_OF_DAY);
-        int m = objCalendar.get(Calendar.MINUTE);
-
-        String horas = String.valueOf(h);
-        String minutos = String.valueOf(m);
-
-        String horaMinuto = "" + horas + ":" + minutos;
-        return fechaHora = "" + fecha + " " + horaMinuto;
-    }
 
     private OnFragmentInteractionListener mListener;
 
@@ -115,15 +99,28 @@ public class FragmentRegistro extends Fragment {
         View viewFragmentRegistro = inflater.inflate(R.layout.fragment_fragment_registro, container, false);
 
         //Creamos las referencias con la interfaz
-        objViewAutos = viewFragmentRegistro.findViewById(R.id.view_autos_dis);
-        objViewMotos = viewFragmentRegistro.findViewById(R.id.view_motos_dis);
+        objViewAutosDis = viewFragmentRegistro.findViewById(R.id.view_autos_dis);
+        objViewAutosActuales = viewFragmentRegistro.findViewById(R.id.view_autos_actuales);
+        objViewMotosDis = viewFragmentRegistro.findViewById(R.id.view_motos_dis);
+        objViewMotosActuales = viewFragmentRegistro.findViewById(R.id.view_motos_actuales);
+
         objSpinner = viewFragmentRegistro.findViewById(R.id.spinner_registro);
         objGroup = viewFragmentRegistro.findViewById(R.id.radio_group_ent_sal);
         objBtnRegistra = viewFragmentRegistro.findViewById(R.id.btn_registra_archivo);
 
+        //Crea una instancia de AdministraArchivo para mostrar y modificar la disponibilidad de motos y autos
+        final AdministraArchivo objConfigura = new AdministraArchivo(objContext);
+
         //Asignamos el texto a los TextView
-        objViewAutos.setText("Autos diponibles:");
-        objViewMotos.setText("Motos diponibles:");
+
+        /*
+        int a = objConfigura.getAutosActuales();
+        String autosActuales = "Autos actuales: " + a;
+        objViewAutosActuales.setText(autosActuales);
+
+        String motosActuales = "Motos actuales: " + objConfigura.getMotosActuales();
+        objViewMotosActuales.setText(motosActuales);
+        */
 
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();
@@ -145,126 +142,9 @@ public class FragmentRegistro extends Fragment {
                 String selectSpinner = objSpinner.getSelectedItem().toString();
                 //Almacenamos la seleccion de RadioButton
                 int selectRadio = objGroup.getCheckedRadioButtonId();
-                //Validamos el RadioButton presionado
-                switch (selectRadio) {
-                    //Si es una entrada
-                    case R.id.radio_entrada:
-                        try {
-                            int contadorArchivoEntradas = 1;
-                            //Creamos un ArrayList para almacenar el orden de los archivos
-                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
-                            //Traemos todos los archivos de la aplicacion)
-                            String[] archivo = objContext.fileList();
-                            //Si archivos en la posicion 0 no esta vacio
-                            if (archivo!=null) {
-                                for (int i = 0; i < archivo.length; i++) {
-                                    if (archivo[i].equalsIgnoreCase("instant-run")) {
-                                        continue;
-                                    }
-
-                                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                                    objBuffered = new BufferedReader(objAbreArchivo);
-
-                                    String fechaHora = objBuffered.readLine();
-                                    String entrada = objBuffered.readLine();
-                                    String ordenArchivo = objBuffered.readLine();
-                                    String vehiculo = objBuffered.readLine();
-
-                                    //Verificamos el orden de los archivos
-                                    if (entrada.equals("1")) {
-                                        arrayOrdenArchivo.add(ordenArchivo);
-                                    }
-                                }
-                            }
-
-                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
-                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
-                                contadorArchivoEntradas++;
-                            }
-
-                            //Creamos un archivo
-                            //String nombreArchivo = "" + contadorArchivo + "1";
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoEntradas + "1", Activity.MODE_PRIVATE));
-                            //Escribimos la fecha y la hora
-                            objCreaArchivo.write("" + getFechaHora() + "\n");
-                            //Escribimos que es una entrada
-                            objCreaArchivo.write("1" + "\n");
-                            //Escribimos el orden ascendente del archivo
-                            objCreaArchivo.write("" + contadorArchivoEntradas + "\n");
-                            //Escribimos si es una moto o un carro
-                            objCreaArchivo.write("" + selectSpinner);
-                            //Limpiamos el archivo
-                            objCreaArchivo.flush();
-                            //Cerramos el archivo
-                            objCreaArchivo.close();
-
-                            Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
-
-                            //Volvemos los campos a la normalidad
-                            objSpinner.setSelection(0);
-                        } catch (IOException e) {
-                            Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    //Si es una salida
-                    case R.id.radio_salida:
-                        try {
-                            int contadorArchivoSalidas = 1;
-                            //Creamos un ArrayList para almacenar el orden de los archivos
-                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
-                            //Traemos todos los archivos de la aplicacion)
-                            String[] archivo = objContext.fileList();
-                            //Si archivos en la posicion 0 no esta vacio
-                            if (archivo!=null) {
-                                for (int i = 0; i < archivo.length; i++) {
-                                    if (archivo[i].equalsIgnoreCase("instant-run")) {
-                                        continue;
-                                    }
-
-                                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                                    objBuffered = new BufferedReader(objAbreArchivo);
-
-                                    String fechaHora = objBuffered.readLine();
-                                    String salida = objBuffered.readLine();
-                                    String ordenArchivo = objBuffered.readLine();
-                                    String vehiculo = objBuffered.readLine();
-
-                                    //Verificamos el orden de los archivos
-                                    if (salida.equals("2")) {
-                                        arrayOrdenArchivo.add(ordenArchivo);
-                                    }
-                                }
-                            }
-
-                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoSalidas
-                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
-                                contadorArchivoSalidas++;
-                            }
-
-                            //Creamos un archivo
-                            //String nombreArchivo = "" + contadorArchivo + "1";
-                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoSalidas + "2", Activity.MODE_PRIVATE));
-                            //Escribimos la fecha y la hora
-                            objCreaArchivo.write("" + getFechaHora() + "\n");
-                            //Escribimos que es una salida
-                            objCreaArchivo.write("2" + "\n");
-                            //Escribimos el orden ascendente del archivo
-                            objCreaArchivo.write("" + contadorArchivoSalidas + "\n");
-                            //Escribimos si es una moto o un carro
-                            objCreaArchivo.write("" + selectSpinner);
-                            //Limpiamos el archivo
-                            objCreaArchivo.flush();
-                            //Cerramos el archivo
-                            objCreaArchivo.close();
-
-                            Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
-
-                            //Volvemos los campos a la normalidad
-                            objSpinner.setSelection(0);
-                        } catch (IOException e) {
-                            Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
+                if (objConfigura.creaEntradaSalida(selectSpinner, selectRadio)){
+                    Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
+                    objSpinner.setSelection(0);
                 }
             }
         });

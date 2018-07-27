@@ -7,33 +7,72 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/viewUno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view_autos_dis"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-43dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/viewUno"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/view_autos_dis"
-        android:layout_width="272dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="51dp"
         android:text="@string/view_autos_dis"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/view_motos_dis"
-        android:layout_width="272dp"
-        android:layout_height="53dp"
+        android:id="@+id/view_autos_actuales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/viewUno"
+        android:layout_below="@+id/view_autos_dis"
+        android:text="@string/view_autos_actuales"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/viewDos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/view_autos_dis"
-        android:layout_marginTop="93dp"
+        android:layout_alignStart="@+id/viewUno"
+        android:layout_marginTop="126dp"
+        android:text="@string/viewDos"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/view_motos_actuales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/viewUno"
+        android:layout_below="@+id/view_motos_dis"
+        android:text="@string/view_motos_actuales"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/view_motos_dis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/viewUno"
+        android:layout_marginTop="161dp"
         android:text="@string/view_motos_dip"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/spinner_registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="228dp" />
+        android:layout_marginBottom="205dp" />
 
     <RadioGroup
         android:id="@+id/radio_group_ent_sal"
@@ -41,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="112dp">
+        android:layout_marginBottom="106dp">
 
         <RadioButton
             android:id="@+id/radio_entrada"
@@ -64,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="27dp"
         android:text="@string/btn_registra_archivo" />
 
 </RelativeLayout>
