@@ -112,9 +112,6 @@ public class FragmentInforme extends Fragment{
                     objArrayLista = new ArrayList<>();
 
                     String[] archivo = objContext.fileList();
-                    if (archivo[0]==null){
-                        Toast.makeText(objContext, "Esta vacio", Toast.LENGTH_SHORT).show();
-                    }
                     for (int i = 0; i < archivo.length; i++) {
                         if (archivo[i].equalsIgnoreCase("instant-run")) {
                             continue;
@@ -140,12 +137,21 @@ public class FragmentInforme extends Fragment{
                             }
                         }
                     }
-                    //Creamos una instancia del adaptador
-                    objAdapter = new AdapterListView(objContext, objArrayLista);
-                    //Adaptamos el adaptador a la lista
-                    lista.setAdapter(objAdapter);
+                    //Si archivo esta vacio
+                    if (archivo.length == 0){
+                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        //Si no hay archivos aparte del archivo instant-run
+                        if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
+                            Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                        }
+                        //Creamos una instancia del adaptador
+                        objAdapter = new AdapterListView(objContext, objArrayLista);
+                        //Adaptamos el adaptador a la lista
+                        lista.setAdapter(objAdapter);
+                    }
                 }catch (Exception e){
-                    Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -158,38 +164,43 @@ public class FragmentInforme extends Fragment{
                     objArrayLista = new ArrayList<>();
 
                     String[] archivo = objContext.fileList();
-                    if (!archivo[0].isEmpty()) {
-                        for (int i = 0; i < archivo.length; i++) {
-                            if (archivo[i].equalsIgnoreCase("instant-run")) {
-                                continue;
+                    for (int i = 0; i < archivo.length; i++) {
+                        if (archivo[i].equalsIgnoreCase("instant-run")) {
+                            continue;
+                        }
+
+                        objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                        objBuffered = new BufferedReader(objAbreArchivo);
+
+                        String fechaHora = objBuffered.readLine();
+                        String entrada = objBuffered.readLine();
+                        String ordenArchivo = objBuffered.readLine();
+                        String vehiculo = objBuffered.readLine();
+
+                        //Verificamos que sea una salida
+                        if (entrada.equals("2")) {
+                            //Verificamos el tipo de vehiculo
+                            if (vehiculo.equals("moto")) {
+                                //Creo un item en la lista de informe
+                                objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                            } else if (vehiculo.equals("carro")) {
+                                //Creo un item en la lista de informe
+                                objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
                             }
-
-                            objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                            objBuffered = new BufferedReader(objAbreArchivo);
-
-                            String fechaHora = objBuffered.readLine();
-                            String entrada = objBuffered.readLine();
-                            String ordenArchivo = objBuffered.readLine();
-                            String vehiculo = objBuffered.readLine();
-
-                            //Verificamos que sea una salida
-                            if (entrada.equals("2")) {
-                                //Verificamos el tipo de vehiculo
-                                if (vehiculo.equals("moto")) {
-                                    //Creo un item en la lista de informe
-                                    objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
-                                } else if (vehiculo.equals("carro")) {
-                                    //Creo un item en la lista de informe
-                                    objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
-                                }
-                            }
+                        }
+                    }
+                    //Si archivo esta vacio
+                    if (archivo.length == 0){
+                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        //Si no hay archivos aparte del archivo instant-run
+                        if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
+                            Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
                         }
                         //Creamos una instancia del adaptador
                         objAdapter = new AdapterListView(objContext, objArrayLista);
                         //Adaptamos el adaptador a la lista
                         lista.setAdapter(objAdapter);
-                    }else {
-                        Toast.makeText(objContext, "No se encuentran salidas.", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();

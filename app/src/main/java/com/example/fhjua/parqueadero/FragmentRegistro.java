@@ -52,28 +52,10 @@ public class FragmentRegistro extends Fragment {
     private Spinner objSpinner;
     private RadioGroup objGroup;
     private Button objBtnRegistra;
-    private int capacidadAutos = 0;
-    private int capacidadMotos = 0;
     //Creamos un objeto de tipo InputStreamReader
     private InputStreamReader objAbreArchivo = null;
     //Creamos un objeto de tipo BufferedReader
     private BufferedReader objBuffered = null;
-
-    public int getCapacidadAutos() {
-        return capacidadAutos;
-    }
-
-    public void setCapacidadAutos(int capacidadAutos) {
-        this.capacidadAutos = capacidadAutos;
-    }
-
-    public int getCapacidadMotos() {
-        return capacidadMotos;
-    }
-
-    public void setCapacidadMotos(int capacidadMotos) {
-        this.capacidadMotos = capacidadMotos;
-    }
 
     public String getFechaHora(){
         String fechaHora;
@@ -140,8 +122,8 @@ public class FragmentRegistro extends Fragment {
         objBtnRegistra = viewFragmentRegistro.findViewById(R.id.btn_registra_archivo);
 
         //Asignamos el texto a los TextView
-        objViewAutos.setText("Autos diponibles: " + getCapacidadAutos());
-        objViewMotos.setText("Motos diponibles: " + getCapacidadMotos());
+        objViewAutos.setText("Autos diponibles:");
+        objViewMotos.setText("Motos diponibles:");
 
         objActivity = getActivity();
         objContext = objActivity.getApplicationContext();

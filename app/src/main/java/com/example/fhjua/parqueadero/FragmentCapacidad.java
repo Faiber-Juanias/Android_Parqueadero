@@ -24,7 +24,7 @@ import android.widget.Toast;
  * Use the {@link FragmentCapacidad#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCapacidad extends Fragment implements ComunicaDialogo{
+public class FragmentCapacidad extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -92,21 +92,37 @@ public class FragmentCapacidad extends Fragment implements ComunicaDialogo{
         btnUno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Instanceo el dialogo
-                DialogoCapacidad objCapacidad = new DialogoCapacidad();
-                //Envia el id a la interfaz
-                ((ComunicaDialogo)getActivity()).enviaInfo("", btnUno.getId());
-                //Muestra el dialogo
-                objCapacidad.show(getFragmentManager(),"dialogcapacidad");
+                ((ComunicaDialogo)getActivity()).enviaInfo(btnUno.getId());
             }
         });
 
         btnDos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((ComunicaDialogo)getActivity()).enviaInfo(btnDos.getId());
             }
         });
+
+        //Creamos la instancia de ConfiguraCapacidad
+        ConfiguraCapacidad objConfigura = new ConfiguraCapacidad(objContext);
+
+        //Si se reciben argumentos
+        if (getArguments() != null){
+            //Obtenemos los datos del Bundle de Activity Principal
+            int texto = getArguments().getInt("capacidad");
+            int id = getArguments().getInt("id");
+
+            if (id == btnUno.getId()){
+                objConfigura.setCapacidadAutos(texto);
+            }else if (id == btnDos.getId()){
+                objConfigura.setCapacidadMotos(texto);
+            }
+        }
+
+
+        //Mostramos el los view la capacidad de los autos y las motos
+        viewMaxAutos.setText("" + objConfigura.getCapacidadAutos());
+        viewMaxMotos.setText("" + objConfigura.getCapacidadMotos());
 
         return viewFragmetnCapacidad;
     }
@@ -133,16 +149,6 @@ public class FragmentCapacidad extends Fragment implements ComunicaDialogo{
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void enviaInfo(String texto, int id) {
-        /*
-        if (id == R.id.btn_config_autos){
-            viewMaxAutos.setText(texto);
-        }else if (id == R.id.btn_config_motos){
-            viewMaxMotos.setText(texto);
-        }*/
     }
 
     /**

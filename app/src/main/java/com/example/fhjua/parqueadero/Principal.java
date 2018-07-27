@@ -13,7 +13,7 @@ import android.widget.ImageView;
 public class Principal extends AppCompatActivity implements
         FragmentRegistro.OnFragmentInteractionListener,
         FragmentCapacidad.OnFragmentInteractionListener,
-        FragmentInforme.OnFragmentInteractionListener {
+        FragmentInforme.OnFragmentInteractionListener, ComunicaDialogo {
 
     //Almaceno todos los id de los botones
     private int[] botones = new int[]{R.id.btn_registro, R.id.btn_capacidad, R.id.btn_informe};
@@ -67,5 +67,40 @@ public class Principal extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void enviaInfo(int id) {
+        //Creamos la transaccion
+        FragmentTransaction objTransaction = getFragmentManager().beginTransaction();
+        //Creamos la instancia de DialogoCapacidad
+        DialogoCapacidad objDialogo = new DialogoCapacidad();
+        //Creamos un Bundle para pasar el id a DialogoCapacidad
+        Bundle args = new Bundle();
+        args.putInt("id", id);
+        //Asignamos el Bundle a DialogoCapacidad
+        objDialogo.setArguments(args);
+        //Mostramos a DialogoCapacidad
+        objDialogo.show(objTransaction, "DialogoCapacidad");
+    }
+
+    @Override
+    public void recibeInfo(int capacidad, int id) {
+        //Creamos la transaccion
+        FragmentTransaction objTransaction = getFragmentManager().beginTransaction();
+        //Creamos la instancia de FragmentCapacidad
+
+        FragmentCapacidad objCapacidad = new FragmentCapacidad();
+        //Creamos un Bundle para pasar el texto y el id a FragmentCapacidad
+        Bundle args = new Bundle();
+        args.putInt("capacidad", capacidad);
+        args.putInt("id", id);
+        //Asignamos el Bundle a FragmentCapacidad
+        objCapacidad.setArguments(args);
+
+        //Mostramos a FragmentCapacidad en el contenedor conten_fragment
+        objTransaction.replace(R.id.content_fragment, objCapacidad);
+        //Guardamos los cambios
+        objTransaction.commit();
     }
 }
