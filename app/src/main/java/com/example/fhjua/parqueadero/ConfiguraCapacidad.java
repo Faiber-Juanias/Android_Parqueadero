@@ -11,12 +11,48 @@ public class ConfiguraCapacidad {
 
     private Context objContext;
 
+    private int autosDisponibles;
+    private int motosDisponibles;
+
     private int capacidadAutos;
     private int capacidadMotos;
 
     public ConfiguraCapacidad(Context objContext){
         this.objContext = objContext;
     }
+
+    //Muestra y actualiza la disponibilidad de autos y de motos
+
+    public int getAutosDisponibles() {
+
+        return autosDisponibles;
+    }
+
+    public void setAutosDisponibles(int autosDisponibles) {
+        try{
+            String dato = String.valueOf(autosDisponibles);
+            //Creamos un archivo para guardar la capacidad de autos
+            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("autosDisponibles", Activity.MODE_PRIVATE));
+            //Escribimos en el archivo
+            objCreaArchivo.write(dato);
+            //Limpiamos a objCreaArchivo
+            objCreaArchivo.flush();
+            //Cerramos a objCreaArchivo
+            objCreaArchivo.close();
+        }catch (Exception e){
+            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public int getMotosDisponibles() {
+        return motosDisponibles;
+    }
+
+    public void setMotosDisponibles(int motosDisponibles) {
+        this.motosDisponibles = motosDisponibles;
+    }
+
+    //Muestra y configura la capacidad de autos y motos
 
     public int getCapacidadAutos() {
         try{
