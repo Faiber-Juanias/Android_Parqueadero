@@ -108,22 +108,29 @@ public class FragmentRegistro extends Fragment {
         objGroup = viewFragmentRegistro.findViewById(R.id.radio_group_ent_sal);
         objBtnRegistra = viewFragmentRegistro.findViewById(R.id.btn_registra_archivo);
 
+        objActivity = getActivity();
+        objContext = objActivity.getApplicationContext();
+
         //Crea una instancia de AdministraArchivo para mostrar y modificar la disponibilidad de motos y autos
         final AdministraArchivo objConfigura = new AdministraArchivo(objContext);
 
         //Asignamos el texto a los TextView
 
-        /*
-        int a = objConfigura.getAutosActuales();
-        String autosActuales = "Autos actuales: " + a;
+        int a = objConfigura.getAutosDisponibles();
+        String autosDisponibles = "Autos disponibles: " + a;
+        objViewAutosDis.setText(autosDisponibles);
+
+        int b = objConfigura.getAutosActuales();
+        String autosActuales = "Autos actuales: " + b;
         objViewAutosActuales.setText(autosActuales);
 
-        String motosActuales = "Motos actuales: " + objConfigura.getMotosActuales();
-        objViewMotosActuales.setText(motosActuales);
-        */
+        int c = objConfigura.getMotosDisponibles();
+        String motosDisponibles = "Motos disponibles: " + c;
+        objViewMotosDis.setText(motosDisponibles);
 
-        objActivity = getActivity();
-        objContext = objActivity.getApplicationContext();
+        int d = objConfigura.getMotosActuales();
+        String motosActuales = "Motos actuales: " + d;
+        objViewMotosActuales.setText(motosActuales);
 
         //Llenamos el Spinner de la interfaz
         ArrayList<String> objListSpinner = new ArrayList<>();
@@ -131,7 +138,7 @@ public class FragmentRegistro extends Fragment {
         objListSpinner.add("carro");
         objListSpinner.add("moto");
         //Adaptamos el Spinner
-        ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_spinner_dropdown_item, objListSpinner);
+        final ArrayAdapter<String> objAdapter = new ArrayAdapter<String>(objContext, android.R.layout.simple_spinner_dropdown_item, objListSpinner);
         objSpinner.setAdapter(objAdapter);
 
         //Ponemos en escucha el boton de registrar
@@ -142,10 +149,13 @@ public class FragmentRegistro extends Fragment {
                 String selectSpinner = objSpinner.getSelectedItem().toString();
                 //Almacenamos la seleccion de RadioButton
                 int selectRadio = objGroup.getCheckedRadioButtonId();
-                if (objConfigura.creaEntradaSalida(selectSpinner, selectRadio)){
+                int result = objConfigura.creaEntradaSalida(selectSpinner, selectRadio);
+                if (result == 1){
                     Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
-                    objSpinner.setSelection(0);
+                }else if (result == 2){
+                    Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
                 }
+                objSpinner.setSelection(0);
             }
         });
         return viewFragmentRegistro;

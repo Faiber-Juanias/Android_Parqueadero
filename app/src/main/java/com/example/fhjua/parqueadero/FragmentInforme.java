@@ -107,109 +107,113 @@ public class FragmentInforme extends Fragment{
         btnListaEntradas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    //Instanciamos el ArrayList de tipo Datos
-                    objArrayLista = new ArrayList<>();
-                    //Obtenemos todos los archivos que contenga la aplicacion
-                    String[] archivo = objContext.fileList();
-                    //Recorremos a archivo
-                    for (int i = 0; i < archivo.length; i++) {
-                        if (archivo[i].equalsIgnoreCase("instant-run")) {
-                            continue;
-                        }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
-                            continue;
-                        }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
-                            continue;
-                        }
+            try {
+                //Instanciamos el ArrayList de tipo Datos
+                objArrayLista = new ArrayList<>();
+                //Obtenemos todos los archivos que contenga la aplicacion
+                String[] archivo = objContext.fileList();
+                //Recorremos a archivo
+                for (int i = 0; i < archivo.length; i++) {
+                    if (archivo[i].equalsIgnoreCase("instant-run")) {
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
+                        continue;
+                    }
 
-                        objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                        objBuffered = new BufferedReader(objAbreArchivo);
+                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                    objBuffered = new BufferedReader(objAbreArchivo);
 
-                        String fechaHora = objBuffered.readLine();
-                        String entrada = objBuffered.readLine();
-                        String ordenArchivo = objBuffered.readLine();
-                        String vehiculo = objBuffered.readLine();
+                    String fechaHora = objBuffered.readLine();
+                    String entrada = objBuffered.readLine();
+                    String ordenArchivo = objBuffered.readLine();
+                    String vehiculo = objBuffered.readLine();
 
-                        //Verificamos que sea una entrada
-                        if (entrada.equals("1")) {
-                            //Verificamos el tipo de vehiculo
-                            if (vehiculo.equals("moto")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
-                            } else if (vehiculo.equals("carro")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
-                            }
+                    //Verificamos que sea una entrada
+                    if (entrada.equals("1")) {
+                        //Verificamos el tipo de vehiculo
+                        if (vehiculo.equals("moto")) {
+                            //Creo un item en la lista de informe
+                            objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                        } else if (vehiculo.equals("carro")) {
+                            //Creo un item en la lista de informe
+                            objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
                         }
                     }
-                    //Si archivo esta vacio
-                    if (archivo.length == 0){
-                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
-                    }else {
-                        //Si no hay archivos aparte del archivo instant-run
-                        if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
-                            Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
-                        }
-                        //Creamos una instancia del adaptador
-                        objAdapter = new AdapterListView(objContext, objArrayLista);
-                        //Adaptamos el adaptador a la lista
-                        lista.setAdapter(objAdapter);
-                    }
-                }catch (Exception e){
-                    Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                //Si archivo esta vacio
+                if (archivo.length == 0){
+                    Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                }else {
+                    //Si no hay archivos aparte del archivo instant-run
+                    if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
+                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                    }
+                    //Creamos una instancia del adaptador
+                    objAdapter = new AdapterListView(objContext, objArrayLista);
+                    //Adaptamos el adaptador a la lista
+                    lista.setAdapter(objAdapter);
+                }
+            }catch (Exception e){
+                Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
         btnListaSalidas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    //Instanciamos el ArrayList de tipo Datos
-                    objArrayLista = new ArrayList<>();
+            try {
+                //Instanciamos el ArrayList de tipo Datos
+                objArrayLista = new ArrayList<>();
 
-                    String[] archivo = objContext.fileList();
-                    for (int i = 0; i < archivo.length; i++) {
-                        if (archivo[i].equalsIgnoreCase("instant-run")) {
-                            continue;
-                        }
+                String[] archivo = objContext.fileList();
+                for (int i = 0; i < archivo.length; i++) {
+                    if (archivo[i].equalsIgnoreCase("instant-run")) {
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
+                        continue;
+                    }
 
-                        objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                        objBuffered = new BufferedReader(objAbreArchivo);
+                    objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                    objBuffered = new BufferedReader(objAbreArchivo);
 
-                        String fechaHora = objBuffered.readLine();
-                        String entrada = objBuffered.readLine();
-                        String ordenArchivo = objBuffered.readLine();
-                        String vehiculo = objBuffered.readLine();
+                    String fechaHora = objBuffered.readLine();
+                    String entrada = objBuffered.readLine();
+                    String ordenArchivo = objBuffered.readLine();
+                    String vehiculo = objBuffered.readLine();
 
-                        //Verificamos que sea una salida
-                        if (entrada.equals("2")) {
-                            //Verificamos el tipo de vehiculo
-                            if (vehiculo.equals("moto")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
-                            } else if (vehiculo.equals("carro")) {
-                                //Creo un item en la lista de informe
-                                objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
-                            }
+                    //Verificamos que sea una salida
+                    if (entrada.equals("2")) {
+                        //Verificamos el tipo de vehiculo
+                        if (vehiculo.equals("moto")) {
+                            //Creo un item en la lista de informe
+                            objArrayLista.add(new Datos(R.drawable.moto, fechaHora, ordenArchivo));
+                        } else if (vehiculo.equals("carro")) {
+                            //Creo un item en la lista de informe
+                            objArrayLista.add(new Datos(R.drawable.carro, fechaHora, ordenArchivo));
                         }
                     }
-                    //Si archivo esta vacio
-                    if (archivo.length == 0){
-                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
-                    }else {
-                        //Si no hay archivos aparte del archivo instant-run
-                        if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
-                            Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
-                        }
-                        //Creamos una instancia del adaptador
-                        objAdapter = new AdapterListView(objContext, objArrayLista);
-                        //Adaptamos el adaptador a la lista
-                        lista.setAdapter(objAdapter);
-                    }
-                }catch (Exception e){
-                    Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                //Si archivo esta vacio
+                if (archivo.length == 0){
+                    Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                }else {
+                    //Si no hay archivos aparte del archivo instant-run
+                    if (archivo[0].equalsIgnoreCase("instant-run") && archivo.length == 1) {
+                        Toast.makeText(objContext, "No hay entradas.", Toast.LENGTH_SHORT).show();
+                    }
+                    //Creamos una instancia del adaptador
+                    objAdapter = new AdapterListView(objContext, objArrayLista);
+                    //Adaptamos el adaptador a la lista
+                    lista.setAdapter(objAdapter);
+                }
+            }catch (Exception e){
+                Toast.makeText(objContext, "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
