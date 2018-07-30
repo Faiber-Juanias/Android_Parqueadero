@@ -120,6 +120,10 @@ public class FragmentInforme extends Fragment{
                         continue;
                     }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
                         continue;
+                    }else if (archivo[i].equalsIgnoreCase("autosActuales")){
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("motosActuales")){
+                        continue;
                     }
 
                     objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
@@ -175,6 +179,10 @@ public class FragmentInforme extends Fragment{
                     }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
                         continue;
                     }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("autosActuales")){
+                        continue;
+                    }else if (archivo[i].equalsIgnoreCase("motosActuales")){
                         continue;
                     }
 

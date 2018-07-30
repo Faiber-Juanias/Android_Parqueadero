@@ -147,15 +147,20 @@ public class FragmentRegistro extends Fragment {
             public void onClick(View v) {
                 //Almacenamos la seleccion del Spinner
                 String selectSpinner = objSpinner.getSelectedItem().toString();
-                //Almacenamos la seleccion de RadioButton
-                int selectRadio = objGroup.getCheckedRadioButtonId();
-                int result = objConfigura.creaEntradaSalida(selectSpinner, selectRadio);
-                if (result == 1){
-                    Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
-                }else if (result == 2){
-                    Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
+                //Validamos la seleccion del spinner
+                if (objSpinner.getSelectedItemPosition() != 0) {
+                    //Almacenamos la seleccion de RadioButton
+                    int selectRadio = objGroup.getCheckedRadioButtonId();
+                    int result = objConfigura.creaEntradaSalida(selectSpinner, selectRadio);
+                    if (result == 1) {
+                        Toast.makeText(objContext, "Entrada guardada.", Toast.LENGTH_SHORT).show();
+                    } else if (result == 2) {
+                        Toast.makeText(objContext, "Salida guardada.", Toast.LENGTH_SHORT).show();
+                    }
+                    objSpinner.setSelection(0);
+                }else {
+                    Toast.makeText(objContext, "Seleccione una clase de vehiculo.", Toast.LENGTH_SHORT).show();
                 }
-                objSpinner.setSelection(0);
             }
         });
         return viewFragmentRegistro;

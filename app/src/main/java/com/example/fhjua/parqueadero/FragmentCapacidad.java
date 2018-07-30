@@ -117,8 +117,13 @@ public class FragmentCapacidad extends Fragment {
 
 
         //Mostramos el los view la capacidad de los autos y las motos
-        viewMaxAutos.setText("" + objConfigura.getCapacidadAutos());
-        viewMaxMotos.setText("" + objConfigura.getCapacidadMotos());
+        int a = objConfigura.getCapacidadAutos();
+        String capacidadAutos = "" + a;
+        viewMaxAutos.setText(capacidadAutos);
+
+        int b = objConfigura.getCapacidadMotos();
+        String capacidadMotos = "" + b;
+        viewMaxMotos.setText(capacidadMotos);
 
         return viewFragmetnCapacidad;
     }

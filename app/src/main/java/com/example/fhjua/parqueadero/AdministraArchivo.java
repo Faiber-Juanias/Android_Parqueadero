@@ -18,9 +18,9 @@ public class AdministraArchivo {
     private Context objContext;
 
     private int autosDisponibles = 0;
-    private int autosActuales;
+    private int autosActuales = 0;
     private int motosDisponibles = 0;
-    private int motosActuales;
+    private int motosActuales = 0;
 
     private int capacidadAutos;
     private int capacidadMotos;
@@ -59,16 +59,84 @@ public class AdministraArchivo {
     * 2 para listar las motos
     */
     public int getAutosActuales(){
+        /*
         this.autosActuales = this.cantidadAutosMotos(1);
+        return this.autosActuales;*/
+
+        try {
+            //Obtengo todos los archivos de la aplicacion
+            String[] archivo = objContext.fileList();
+            //Recorro a archivo
+            for (int i=0; i<archivo.length; i++){
+                //Si encuentra a autosActuales
+                if (archivo[i].equalsIgnoreCase("autosActuales")){
+                    InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                    BufferedReader objLeeArchivo = new BufferedReader(objAbreArchivo);
+
+                    this.autosActuales = Integer.parseInt(objLeeArchivo.readLine());
+
+                    objAbreArchivo.close();
+                    objLeeArchivo.close();
+                }
+            }
+            return this.autosActuales;
+        }catch (Exception e){
+            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         return this.autosActuales;
     }
 
+    public void setAutosActuales(int valor){
+        try {
+            //Creo o sobreescribo el archivo
+            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("autosActuales", Activity.MODE_PRIVATE));
+            objCreaArchivo.write("" + valor);
+            objCreaArchivo.flush();
+            objCreaArchivo.close();
+        }catch (Exception e){
+            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public int getMotosActuales(){
+        /*
         this.motosActuales = this.cantidadAutosMotos(2);
+        return this.motosActuales;*/
+
+        try {
+            //Obtengo todos los archivos de la aplicacion
+            String[] archivo = objContext.fileList();
+            //Recorro a archivo
+            for (int i=0; i<archivo.length; i++){
+                //Si encuentra a autosActuales
+                if (archivo[i].equalsIgnoreCase("motosActuales")){
+                    InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                    BufferedReader objLeeArchivo = new BufferedReader(objAbreArchivo);
+
+                    this.motosActuales = Integer.parseInt(objLeeArchivo.readLine());
+
+                    objAbreArchivo.close();
+                    objLeeArchivo.close();
+                }
+            }
+            return this.motosActuales;
+        }catch (Exception e){
+            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         return this.motosActuales;
     }
 
-
+    public void setMotosActuales(int valor){
+        try {
+            //Creo o sobreescribo el archivo
+            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("motosActuales", Activity.MODE_PRIVATE));
+            objCreaArchivo.write("" + valor);
+            objCreaArchivo.flush();
+            objCreaArchivo.close();
+        }catch (Exception e){
+            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     //-----------------Muestra la disponibilidad de autos y de motos-----------------
 
@@ -120,6 +188,9 @@ public class AdministraArchivo {
                     BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
                     //Almacenamos el valor del archivo
                     this.capacidadAutos = Integer.parseInt(objBuffered.readLine());
+
+                    objAbreArchivo.close();
+                    objBuffered.close();
                 }
             }
             return this.capacidadAutos;
@@ -140,6 +211,10 @@ public class AdministraArchivo {
             objCreaArchivo.flush();
             //Cerramos a objCreaArchivo
             objCreaArchivo.close();
+
+            //Formateamos el valor de los autos actuales
+            this.setAutosActuales(0);
+
             Toast.makeText(objContext, "Configurado con exito.", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -178,6 +253,10 @@ public class AdministraArchivo {
             objCreaArchivo.flush();
             //Cierra a objCreaArchivo
             objCreaArchivo.close();
+
+            //Formateamos el valor de las motos actuales
+            this.setMotosActuales(0);
+
             Toast.makeText(objContext, "Configurado con exito.", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -188,184 +267,178 @@ public class AdministraArchivo {
 
     //-----------------Crea entradas y salidas-----------------
 
-    public int creaEntradaSalida(String selectSpinner, int selectRadio){
-        //Validamos el RadioButton presionado
-        switch (selectRadio) {
-            //Si es una entrada
-            case R.id.radio_entrada:
-                try {
-                    int contadorArchivoEntradas = 1;
-                    //Creamos un ArrayList para almacenar el orden de los archivos
-                    ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
-                    //Traemos todos los archivos de la aplicacion
-                    String[] archivo = objContext.fileList();
-                    for (int i = 0; i < archivo.length; i++) {
-                        if (archivo[i].equalsIgnoreCase("instant-run")) {
-                            continue;
-                        }else if(archivo[i].equalsIgnoreCase("capacidadAutos")){
-                            continue;
-                        }else if(archivo[i].equalsIgnoreCase("capacidadMotos")){
-                            continue;
+    public int creaEntradaSalida(String selectSpinner, int selectRadio) {
+        int capaAutos = this.getCapacidadAutos();
+        int capaMotos = this.getCapacidadMotos();
+        //Validamos la capacidad de autos y de motos
+        if (capaAutos != 0 && capaMotos != 0) {
+            //Validamos el RadioButton presionado
+            switch (selectRadio) {
+                //Si es una entrada
+                case R.id.radio_entrada:
+                    try {
+                        int autoDispo = this.getAutosDisponibles();
+                        int motoDispo = this.getMotosDisponibles();
+                        //Valido cuando la disponibilidad de autos y de motos sea 0
+                        if (selectSpinner.equals("carro") && autoDispo != 0 || selectSpinner.equals("moto") && motoDispo != 0) {
+                            int contadorArchivoEntradas = 1;
+                            //Creamos un ArrayList para almacenar el orden de los archivos
+                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
+                            //Traemos todos los archivos de la aplicacion
+                            String[] archivo = objContext.fileList();
+                            for (int i = 0; i < archivo.length; i++) {
+                                if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("autosActuales")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("motosActuales")) {
+                                    continue;
+                                }
+
+                                InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                                BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
+
+                                String fechaHora = objBuffered.readLine();
+                                String entrada = objBuffered.readLine();
+                                String ordenArchivo = objBuffered.readLine();
+                                String vehiculo = objBuffered.readLine();
+
+                                //Verificamos el orden de los archivos
+                                if (entrada.equals("1")) {
+                                    arrayOrdenArchivo.add(ordenArchivo);
+                                }
+                            }
+
+                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
+                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
+                                contadorArchivoEntradas++;
+                            }
+
+                            //Creamos un archivo
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoEntradas + "1", Activity.MODE_PRIVATE));
+                            //Escribimos la fecha y la hora
+                            objCreaArchivo.write("" + getFechaHora() + "\n");
+                            //Escribimos que es una entrada
+                            objCreaArchivo.write("1" + "\n");
+                            //Escribimos el orden ascendente del archivo
+                            objCreaArchivo.write("" + contadorArchivoEntradas + "\n");
+                            //Escribimos si es una moto o un carro
+                            objCreaArchivo.write("" + selectSpinner);
+                            //Limpiamos el archivo
+                            objCreaArchivo.flush();
+                            //Cerramos el archivo
+                            objCreaArchivo.close();
+
+                            //Ya que es una entrada guardo el valor en el archivo interno
+                            if (selectSpinner.equalsIgnoreCase("carro")) {
+                                //Obtengo los autos actuales
+                                int autosActuales = this.getAutosActuales();
+                                autosActuales = autosActuales + 1;
+                                this.setAutosActuales(autosActuales);
+                            } else if (selectSpinner.equalsIgnoreCase("moto")) {
+                                //Obtengo las motos actuales
+                                int motosActuales = this.getMotosActuales();
+                                motosActuales = motosActuales + 1;
+                                this.setMotosActuales(motosActuales);
+                            }
+
+                            return 1;
+                        }else {
+                            Toast.makeText(objContext, "Disponibilidad de autos/motos superada.", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (IOException e) {
+                        Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                //Si es una salida
+                case R.id.radio_salida:
+                    try {
+                        int autoActual = this.getAutosActuales();
+                        int motoActual = this.getMotosActuales();
+                        //Valido si los autos y motos actuales son diferentes a 0
+                        if (selectSpinner.equals("carro") && autoActual != 0 || selectSpinner.equals("moto") && motoActual != 0) {
+                            int contadorArchivoSalidas = 1;
+                            //Creamos un ArrayList para almacenar el orden de los archivos
+                            ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
+                            //Traemos todos los archivos de la aplicacion)
+                            String[] archivo = objContext.fileList();
+                            for (int i = 0; i < archivo.length; i++) {
+                                if (archivo[i].equalsIgnoreCase("instant-run")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("autosActuales")) {
+                                    continue;
+                                } else if (archivo[i].equalsIgnoreCase("motosActuales")) {
+                                    continue;
+                                }
 
-                        InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                        BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
+                                InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
+                                BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
 
-                        String fechaHora = objBuffered.readLine();
-                        String entrada = objBuffered.readLine();
-                        String ordenArchivo = objBuffered.readLine();
-                        String vehiculo = objBuffered.readLine();
+                                String fechaHora = objBuffered.readLine();
+                                String salida = objBuffered.readLine();
+                                String ordenArchivo = objBuffered.readLine();
+                                String vehiculo = objBuffered.readLine();
 
-                        //Verificamos el orden de los archivos
-                        if (entrada.equals("1")) {
-                            arrayOrdenArchivo.add(ordenArchivo);
+                                //Verificamos el orden de los archivos
+                                if (salida.equals("2")) {
+                                    arrayOrdenArchivo.add(ordenArchivo);
+                                }
+                            }
+
+                            //recorremos el array para almacenar el numero de posiciones en contadorArchivoSalidas
+                            for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
+                                contadorArchivoSalidas++;
+                            }
+
+                            //Creamos un archivo
+                            //String nombreArchivo = "" + contadorArchivo + "1";
+                            OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoSalidas + "2", Activity.MODE_PRIVATE));
+                            //Escribimos la fecha y la hora
+                            objCreaArchivo.write("" + getFechaHora() + "\n");
+                            //Escribimos que es una salida
+                            objCreaArchivo.write("2" + "\n");
+                            //Escribimos el orden ascendente del archivo
+                            objCreaArchivo.write("" + contadorArchivoSalidas + "\n");
+                            //Escribimos si es una moto o un carro
+                            objCreaArchivo.write("" + selectSpinner);
+                            //Limpiamos el archivo
+                            objCreaArchivo.flush();
+                            //Cerramos el archivo
+                            objCreaArchivo.close();
+
+                            //Ya que es una entrada guardo el valor en el archivo interno
+                            if (selectSpinner.equalsIgnoreCase("carro")) {
+                                //Obtengo los autos actuales
+                                int autosActuales = this.getAutosActuales();
+                                autosActuales = autosActuales - 1;
+                                this.setAutosActuales(autosActuales);
+                            } else if (selectSpinner.equalsIgnoreCase("moto")) {
+                                //Obtengo las motos actuales
+                                int motosActuales = this.getMotosActuales();
+                                motosActuales = motosActuales - 1;
+                                this.setMotosActuales(motosActuales);
+                            }
+
+                            return 2;
+                        }else {
+                            Toast.makeText(objContext, "No pueden haber salidas, ya que el valor actual de autos/motos es 0.", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (IOException e) {
+                        Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
                     }
-
-                    //recorremos el array para almacenar el numero de posiciones en contadorArchivoEntradas
-                    for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
-                        contadorArchivoEntradas++;
-                    }
-
-                    //Creamos un archivo
-                    OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoEntradas + "1", Activity.MODE_PRIVATE));
-                    //Escribimos la fecha y la hora
-                    objCreaArchivo.write("" + getFechaHora() + "\n");
-                    //Escribimos que es una entrada
-                    objCreaArchivo.write("1" + "\n");
-                    //Escribimos el orden ascendente del archivo
-                    objCreaArchivo.write("" + contadorArchivoEntradas + "\n");
-                    //Escribimos si es una moto o un carro
-                    objCreaArchivo.write("" + selectSpinner);
-                    //Limpiamos el archivo
-                    objCreaArchivo.flush();
-                    //Cerramos el archivo
-                    objCreaArchivo.close();
-
-                    return 1;
-                } catch (IOException e) {
-                    Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            //Si es una salida
-            case R.id.radio_salida:
-                try {
-                    int contadorArchivoSalidas = 1;
-                    //Creamos un ArrayList para almacenar el orden de los archivos
-                    ArrayList<String> arrayOrdenArchivo = new ArrayList<>();
-                    //Traemos todos los archivos de la aplicacion)
-                    String[] archivo = objContext.fileList();
-                    for (int i = 0; i < archivo.length; i++) {
-                        if (archivo[i].equalsIgnoreCase("instant-run")) {
-                            continue;
-                        }else if(archivo[i].equalsIgnoreCase("capacidadAutos")){
-                            continue;
-                        }else if(archivo[i].equalsIgnoreCase("capacidadMotos")){
-                            continue;
-                        }
-
-                        InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                        BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
-
-                        String fechaHora = objBuffered.readLine();
-                        String salida = objBuffered.readLine();
-                        String ordenArchivo = objBuffered.readLine();
-                        String vehiculo = objBuffered.readLine();
-
-                        //Verificamos el orden de los archivos
-                        if (salida.equals("2")) {
-                            arrayOrdenArchivo.add(ordenArchivo);
-                        }
-                    }
-
-                    //recorremos el array para almacenar el numero de posiciones en contadorArchivoSalidas
-                    for (int i = 0; i < arrayOrdenArchivo.size(); i++) {
-                        contadorArchivoSalidas++;
-                    }
-
-                    //Creamos un archivo
-                    //String nombreArchivo = "" + contadorArchivo + "1";
-                    OutputStreamWriter objCreaArchivo = new OutputStreamWriter(objContext.openFileOutput("" + contadorArchivoSalidas + "2", Activity.MODE_PRIVATE));
-                    //Escribimos la fecha y la hora
-                    objCreaArchivo.write("" + getFechaHora() + "\n");
-                    //Escribimos que es una salida
-                    objCreaArchivo.write("2" + "\n");
-                    //Escribimos el orden ascendente del archivo
-                    objCreaArchivo.write("" + contadorArchivoSalidas + "\n");
-                    //Escribimos si es una moto o un carro
-                    objCreaArchivo.write("" + selectSpinner);
-                    //Limpiamos el archivo
-                    objCreaArchivo.flush();
-                    //Cerramos el archivo
-                    objCreaArchivo.close();
-
-                    return 2;
-                } catch (IOException e) {
-                    Toast.makeText(objContext, "Error al grabar el archivo.", Toast.LENGTH_SHORT).show();
-                }
-                break;
+                    break;
+            }
+        } else {
+            Toast.makeText(objContext, "Debe configurar la capacidad de autos/motos.", Toast.LENGTH_SHORT).show();
         }
         return 0;
-    }
-
-    //Muestra la cantidad actual de autos y de motos
-    public int cantidadAutosMotos(int param){
-        int  contador = 0;
-        try{
-            String[] archivo = objContext.fileList();
-            if (param == 1){ //Si se listan los autos actuales
-                //Recorremos a archivo
-                for (int i = 0; i < archivo.length; i++) {
-                    if (archivo[i].equalsIgnoreCase("instant-run")) {
-                        continue;
-                    }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
-                        continue;
-                    }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
-                        continue;
-                    }
-
-                    InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                    BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
-
-                    String fechaHora = objBuffered.readLine();
-                    String salidaEntrada = objBuffered.readLine();
-                    String ordenArchivo = objBuffered.readLine();
-                    String vehiculo = objBuffered.readLine();
-
-                    if (vehiculo.equals("carro")){
-                        contador++;
-                    }
-                }
-                return contador;
-            }else if (param == 2){ //Si se listan las motos actuales
-                //Recorremos a archivo
-                for (int i = 0; i < archivo.length; i++) {
-                    if (archivo[i].equalsIgnoreCase("instant-run")) {
-                        continue;
-                    }else if (archivo[i].equalsIgnoreCase("capacidadAutos")) {
-                        continue;
-                    }else if (archivo[i].equalsIgnoreCase("capacidadMotos")) {
-                        continue;
-                    }
-
-                    InputStreamReader objAbreArchivo = new InputStreamReader(objContext.openFileInput(archivo[i]));
-                    BufferedReader objBuffered = new BufferedReader(objAbreArchivo);
-
-                    String fechaHora = objBuffered.readLine();
-                    String salidaEntrada = objBuffered.readLine();
-                    String ordenArchivo = objBuffered.readLine();
-                    String vehiculo = objBuffered.readLine();
-
-                    //Verificamos el orden de los archivos
-                    if (vehiculo.equals("moto")) {
-                        contador++;
-                    }
-                }
-                return contador;
-            }
-        }catch (Exception e){
-            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return contador;
     }
 }
