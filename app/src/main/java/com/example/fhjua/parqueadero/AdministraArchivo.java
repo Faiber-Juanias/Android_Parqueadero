@@ -81,7 +81,7 @@ public class AdministraArchivo {
             }
             return this.autosActuales;
         }catch (Exception e){
-            Toast.makeText(objContext, "ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(objContext, "ERROR:   " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return this.autosActuales;
     }

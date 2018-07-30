@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/viewUno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/viewUno"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/view_autos_dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_autos_dis"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/view_autos_actuales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_autos_actuales"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+            android:id="@+id/viewDos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/viewDos"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/view_motos_actuales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_motos_actuales"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/view_motos_dis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_motos_dip"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="185dp"
+        android:layout_marginStart="276dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/spinner_registro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_ent_sal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <RadioButton
+                android:id="@+id/radio_entrada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_entrada"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/radio_salida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_salida"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_registra_archivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_registra_archivo" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
